@@ -2,10 +2,7 @@ import type { Metadata, Viewport } from "next";
 
 import "./globals.css";
 
-import axios from "axios";
 import { ModalProvider } from "@/components/provider/modal-provider";
-
-axios.defaults.withCredentials = true;
 
 export const metadata: Metadata = {
   title: "TIMEKEY",
