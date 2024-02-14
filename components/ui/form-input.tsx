@@ -2,7 +2,7 @@ import { ChangeEvent, HTMLInputTypeAttribute, MutableRefObject, forwardRef, memo
 import React from "react";
 import { ControllerRenderProps, UseFormReturn } from "react-hook-form";
 import { FormControl, FormItem, FormMessage } from "@/components/ui/form";
-import Input from "@/app/components/Input";
+import Input from "@/components/ui/input";
 import { hyphen } from "@/utils/hyphen";
 
 interface FormItemProps<T> extends ControllerRenderProps<T> {
