@@ -28,6 +28,11 @@ const config: Config = {
       height: {
         bottom: "4.875rem",
       },
+      fontFamily: {
+        sans: ["var(--font-inter)"],
+        dosis: ["var(--font-dosis)"],
+        ibm_kr: ["var(--font-ibm_kr)"],
+      },
     },
   },
   variants: {},

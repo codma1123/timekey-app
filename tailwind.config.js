@@ -31,6 +31,10 @@ module.exports = {
       height: {
         bottom: "4.875rem",
       },
+      fontFamily: {
+        sans: ["var(--font-inter)"],
+        dosis: ["var(--font-dosis)"],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
