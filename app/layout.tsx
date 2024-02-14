@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 import { ModalProvider } from "@/components/provider/modal-provider";
+import AppProvider from "@/components/provider/app";
 
 export const metadata: Metadata = {
   title: "TIMEKEY",
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <ModalProvider />
+      <AppProvider />
       {children}
     </html>
   );
