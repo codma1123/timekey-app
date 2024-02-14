@@ -1,6 +1,6 @@
 "use client";
 
-import SlideUpMotion from "@/components/motion/slide-up";
+import SlideUpMotion from "@/components/motions/slide-up";
 import React, { ReactNode, useState } from "react";
 
 interface FullSheetProps {

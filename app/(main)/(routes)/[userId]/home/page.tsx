@@ -1,7 +1,6 @@
 "use client";
 
-import SlideDownWrapper from "@/app/components/motions/SlideDownWrapper";
-import SwapeMotion from "@/components/motion/swape";
+import SwapeMotion from "@/components/motions/swipe";
 import Content from "@/components/ui/content";
 import OutlineMotionButton from "@/components/ui/outline-motion-button";
 import { useGlobalLoading } from "@/store/global-loading";
@@ -9,10 +8,11 @@ import { useWorkStore } from "@/store/work";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Key, MessageSquareWarning, Settings } from "lucide-react";
+import { MessageSquareWarning } from "lucide-react";
 import Open from "@/components/ui/open";
 import { useModalStore } from "@/store/use-modal-store";
 import HomeSettings from "@/components/home/home-settings";
+import SlideDown from "@/components/motions/slide-down";
 
 interface Notification {
   id: number;
@@ -73,7 +73,7 @@ const HomePage = () => {
 
       <OutlineMotionButton onClick={() => onOpen("ealryWorkoff")} />
 
-      <SlideDownWrapper
+      <SlideDown
         delay={1.6}
         className="w-full flex flex-col gap-2"
       >
@@ -99,7 +99,7 @@ const HomePage = () => {
             </motion.div>
           ))}
         </AnimatePresence>
-      </SlideDownWrapper>
+      </SlideDown>
 
       <Open />
     </>

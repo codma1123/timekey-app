@@ -4,9 +4,9 @@ import Content from "@/components/ui/content";
 import Title from "@/components/ui/title";
 import { MoonIcon } from "@radix-ui/react-icons";
 import FullSheet from "@/components/ui/full-sheet";
-import SlideDownWrapper from "@/app/components/motions/SlideDownWrapper";
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
+import SlideDown from "@/components/motions/slide-down";
 
 const OvertimePage = () => {
   return (
@@ -16,15 +16,15 @@ const OvertimePage = () => {
         Icon={MoonIcon}
       />
 
-      <SlideDownWrapper className="w-full">
+      <SlideDown className="w-full">
         <Content>
           이번주 <span className="font-bold">3시간</span>이나 근무했어요.
         </Content>
-      </SlideDownWrapper>
+      </SlideDown>
 
-      <SlideDownWrapper className="w-full">
+      <SlideDown className="w-full">
         <Content>{/* 아직 정산하지 않은 야근 수당이 <span className="font-bold">1건</span> 남아있어요. */}</Content>
-      </SlideDownWrapper>
+      </SlideDown>
 
       <Drawer>
         <DrawerTrigger>진자?</DrawerTrigger>

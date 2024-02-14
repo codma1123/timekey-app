@@ -1,7 +1,5 @@
 "use client";
 
-import SlideDownWrapper from "@/app/components/motions/SlideDownWrapper";
-
 import { useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -22,6 +20,7 @@ import { useRouter } from "next/navigation";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import SlideDown from "@/components/motions/slide-down";
 
 const schema = yup.object().shape({
   email: yup.string().required("필수값 입니다.").email("유효한 이메일 형식이 아닙니다."),
@@ -96,7 +95,7 @@ const SignIn = () => {
           speed={300}
         >
           <SwiperSlide>
-            <SlideDownWrapper>
+            <SlideDown>
               <FormField
                 control={form.control}
                 name="name"
@@ -123,7 +122,7 @@ const SignIn = () => {
                   />
                 )}
               />
-            </SlideDownWrapper>
+            </SlideDown>
           </SwiperSlide>
 
           <SwiperSlide>

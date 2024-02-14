@@ -1,12 +1,12 @@
-import PageTransitionLayout from "@/app/components/PageTransition";
+import PageTransition from "@/components/motions/page-transition";
 import { ReactNode } from "react";
 
-const SignInLayout = async ({ children }: { children: ReactNode }) => {
+const SignInLayout = ({ children }: { children: ReactNode }) => {
   return (
     <body className="bg-white">
-      <PageTransitionLayout>
+      <PageTransition>
         <div className="h-max-screen pt-12 px-8 flex gap-4 flex-col text-text bg-white">{children}</div>
-      </PageTransitionLayout>
+      </PageTransition>
     </body>
   );
 };
