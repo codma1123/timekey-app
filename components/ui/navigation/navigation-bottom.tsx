@@ -45,8 +45,8 @@ const NavigationBottom = ({ isDarkPage }: { isDarkPage: boolean }) => {
   return (
     <div
       className={cn(
-        "fixed bottom-0 w-full h-20 bg-secondary rounded-bottom rounded-b-none touch-auto text-black flex items-center justify-around transition-all duration-500 z-50",
-        isDarkPage && "bg-white"
+        "fixed bottom-0 w-full h-20 bg-primary-dark rounded-bottom rounded-b-none touch-auto text-zinc-300 flex items-center justify-around transition-all duration-500 z-50",
+        isDarkPage && "bg-white text-black"
       )}
     >
       {bottomNavMenus.map((bottomNavMenu, i) => (

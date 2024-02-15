@@ -26,7 +26,7 @@ const MainLayout = ({ children }: { children: ReactNode; params: { userId: strin
   const pathBg = {
     home: "bg-primary",
     overtime: "bg-overtime",
-    vacation: "bg-text",
+    vacation: "bg-zinc-700",
     user: "bg-white",
   };
 
