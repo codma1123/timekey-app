@@ -2,6 +2,8 @@ PODS:
   - Alamofire (5.8.1)
   - Capacitor (5.5.1):
     - CapacitorCordova
+  - CapacitorApp (5.0.7):
+    - Capacitor
   - CapacitorBrowser (5.1.0):
     - Capacitor
   - CapacitorCordova (5.5.1)
@@ -52,6 +54,7 @@ PODS:
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
   - "CapacitorBrowser (from `../../node_modules/@capacitor/browser`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
@@ -77,6 +80,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Capacitor:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorApp:
+    :path: "../../node_modules/@capacitor/app"
   CapacitorBrowser:
     :path: "../../node_modules/@capacitor/browser"
   CapacitorCordova:
@@ -101,6 +106,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   Capacitor: 9da0a2415e3b6098511f8b5ffdb578d91ee79f8f
+  CapacitorApp: 17fecd0e6cb23feafac7eb0939417389038b0979
   CapacitorBrowser: 7a0fb6a1011abfaaf2dfedfd8248f942a8eda3d6
   CapacitorCordova: e128cc7688c070ca0bfa439898a5f609da8dbcfe
   CapacitorHaptics: 1fffc1217c7e64a472d7845be50fb0c2f7d4204c
@@ -119,6 +125,6 @@ SPEC CHECKSUMS:
   KakaoSDKTemplate: 0fcfbbb7cc05986fe6690b85e19dd8de0fc634e6
   KakaoSDKUser: 5b0826033381d314f550dd90fbf70d3612044ad6
 
-PODFILE CHECKSUM: 610cbda2c28766c66077573da853885a0afdbd71
+PODFILE CHECKSUM: 4a849fc449f61a2b7ba0696566a575e4de2015f0
 
 COCOAPODS: 1.14.2
