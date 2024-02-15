@@ -58,7 +58,7 @@ const OutlineMotionButton = ({ onAnimationComplete, onClick }: OutlineMotionButt
     >
       <motion.div
         className={cn(
-          "font-mono absolute left-1/2 top-1/2 z-50 translate-x-[-50%] translate-y-[-50%] text-[40px] font-extrabold flex flex-col items-center gap-4",
+          "absolute left-1/2 top-1/2 z-50 translate-x-[-50%] translate-y-[-50%] text-[40px] font-extrabold flex flex-col items-center gap-4",
           pathLength < 0.5 ? "text-white" : "text-primary-dark"
         )}
         initial={{ opacity: 0 }}
