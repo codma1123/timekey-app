@@ -13,12 +13,8 @@ interface HomeSettingsProps {
 
 const HomeSettings = ({ user }: HomeSettingsProps) => {
   const router = useRouter();
-  const params = useParams();
   const pathname = usePathname();
-
   const settingControls = useAnimation();
-
-  const [isAlert, setIsAlerted] = useState(false);
 
   const id = useMemo(() => pathname.split("/")[1], [pathname]);
 
