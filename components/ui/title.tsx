@@ -4,16 +4,16 @@ import { LucideIcon } from "lucide-react";
 import React from "react";
 
 interface TitleProps {
-  Icon: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<SVGSVGElement>> | LucideIcon;
+  Icon?: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<SVGSVGElement>> | LucideIcon;
   title: string;
   className?: string;
 }
 
 const Title = ({ Icon, title, className }: TitleProps) => {
   return (
-    <div className={cn("py-4 text-5xl flex items-center gap-[10px] w-full", className)}>
+    <div className={cn("py-4 text-5xl flex items-center gap-[10px] w-full font-bold", className)}>
       {title}
-      <Icon className="h-8 w-8" />
+      {Icon && <Icon className="h-8 w-8" />}
     </div>
   );
 };
