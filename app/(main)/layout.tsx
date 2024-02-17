@@ -5,20 +5,8 @@ import NavigationBottom from "@/components/ui/navigation/navigation-bottom";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import BackSwipe from "@/components/motions/back-swipe";
-
-import { Dosis, IBM_Plex_Sans_KR } from "next/font/google";
-
-const dosis = Dosis({
-  weight: ["200", "300", "400", "500", "600"],
-  subsets: ["latin"],
-  variable: "--font-dosis",
-});
-
-const IBM_KR = IBM_Plex_Sans_KR({
-  weight: ["200", "300", "400", "500", "600"],
-  subsets: ["latin"],
-  variable: "--font-ibm_kr",
-});
+import { DOSIS } from "@/lib/fonts/dosis";
+import { IBM_KR } from "@/lib/fonts/ibm-kr";
 
 const MainLayout = ({ children }: { children: ReactNode; params: { userId: string } }) => {
   const path = usePathname();
@@ -36,7 +24,7 @@ const MainLayout = ({ children }: { children: ReactNode; params: { userId: strin
   const isDarkPage = useMemo(() => lastPath === "overtime" || lastPath === "user", [bgColor]);
 
   return (
-    <body className={cn("transition-all", bgColor, dosis.className, IBM_KR.className)}>
+    <body className={cn(bgColor, DOSIS.className, IBM_KR.className)}>
       <BackSwipe>
         <main className={cn("flex flex-col items-center h-screen w-screen gap-4 transition-all duration-500 pt-16 px-6", isDarkPage && "text-white")}>{children}</main>
       </BackSwipe>
