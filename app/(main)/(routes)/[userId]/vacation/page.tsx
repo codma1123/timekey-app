@@ -1,30 +1,17 @@
-"use client";
-
 import SlideDown from "@/components/motions/slide-down";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import Title from "@/components/ui/title";
-import { useScroll } from "@/hooks/scroll";
-import { cn } from "@/lib/utils";
+import TopLabel from "@/components/ui/top-label";
 import { RocketIcon, CalendarIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 
 const VacationPage = () => {
   const date = 5;
 
-  const { height, scrollToTop } = useScroll();
-
-  const scrolled = height > 20;
-
   return (
     <>
-      <div
-        className={cn("fixed top-[-112px] w-full h-28 z-10 transition-all duration-200 rounded-bl-xl rounded-br-xl", scrolled && "bg-primary-dark top-0 block")}
-        onClick={scrollToTop}
-        onTouchStart={scrollToTop}
-      ></div>
-      <Title
-        className={cn("text-zinc-200 sticky top-10 z-10 transition-all duration-150", scrolled && "top-12 text-2xl")}
-        title="연차"
+      <TopLabel
+        scrolledClassName="bg-primary-dark top-0 block"
+        label="연차"
       />
 
       <SlideDown className="w-full">
