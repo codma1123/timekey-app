@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 
-export const useScroll = () => {
+export const useScroll = ({ breakpoint }: { breakpoint?: number }) => {
   const [height, setHeight] = useState<number>();
+
+  const blocked = height > breakpoint;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +22,7 @@ export const useScroll = () => {
   };
 
   return {
+    blocked,
     height,
     scrollToTop,
   };
