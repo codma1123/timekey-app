@@ -3,29 +3,47 @@
 import Title from "@/components/ui/title";
 import { useScroll } from "@/hooks/scroll";
 import { cn } from "@/lib/utils";
-import React, { HTMLProps } from "react";
+import { IconProps } from "@radix-ui/react-icons/dist/types";
+import { Variants, motion } from "framer-motion";
+import { LucideIcon } from "lucide-react";
+import React, { HTMLProps, MouseEvent } from "react";
 
-interface TopLabelProps extends HTMLProps<HTMLDivElement> {
+interface TopLabelProps {
   scrolledClassName?: string;
+  scrolledColor?: string;
+  titleClassName?: string;
   label?: string;
+  className?: string;
+  Icon?: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<SVGSVGElement>> | LucideIcon;
+  onClick?: (e: MouseEvent) => void;
 }
 
-const TopLabel = ({ className, label, scrolledClassName, ...rest }: TopLabelProps) => {
+const TopLabel = ({ className, label, scrolledClassName, scrolledColor, Icon, titleClassName, ...rest }: TopLabelProps) => {
   const { blocked, scrollToTop } = useScroll({ breakpoint: 20 });
 
   return (
     <>
-      <div
+      <motion.div
+        className="fixed top-[-110px] w-full h-[110px] z-50"
         {...rest}
         onClick={(e) => {
           rest.onClick ? rest.onClick(e) : scrollToTop();
         }}
-        className={cn("fixed top-[-112px] w-full h-28 z-50 transition-all duration-200 rounded-bl-xl rounded-br-xl", blocked && scrolledClassName)}
-      ></div>
+        transition={{ duration: 0.2 }}
+        animate={{
+          top: blocked ? "0px" : "-110px",
+          backgroundColor: "rgb(57 51 44)",
+          transition: { duration: 0.2 },
+        }}
+      ></motion.div>
 
       <Title
-        className={cn("text-zinc-200 sticky top-10 z-50 transition-all duration-150 w-full", className, blocked && "top-12 text-2xl")}
         title={label}
+        className={cn("z-50 sticky", titleClassName)}
+        animate={{
+          top: blocked ? 35 : 50,
+          transition: { duration: 0.2 },
+        }}
       />
     </>
   );
