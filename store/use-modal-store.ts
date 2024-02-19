@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type ModalType = "ealryWorkoff" | "workoff";
+export type ModalType = "ealryWorkoff" | "workoff" | "vacation";
 
 interface ModalData {}
 
