@@ -2,6 +2,7 @@
 
 import EalryWorkoffModal from "@/components/modals/early-workoff-modal";
 import LoadingModal from "@/components/modals/loading-modal";
+import VacationModal from "@/components/modals/vacation-modal";
 import WorkoffModal from "@/components/modals/workoff-modal";
 import { useEffect, useState } from "react";
 
@@ -21,6 +22,7 @@ export const ModalProvider = ({}) => {
       <LoadingModal />
       <EalryWorkoffModal />
       <WorkoffModal />
+      <VacationModal />
     </>
   );
 };
