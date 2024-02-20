@@ -24,7 +24,7 @@ const SignIn = () => {
   });
 
   const router = useRouter();
-  const { signIn } = useAuthStore();
+  const { signIn, setId } = useAuthStore();
   const { setLoading } = useGlobalLoading();
 
   const onSubmit = (e: SignInform) => {
@@ -40,6 +40,8 @@ const SignIn = () => {
         <form
           onSubmit={form.handleSubmit((form) => {
             const id = uuidv4();
+            setId(id);
+
             router.push(`/${id}/home`);
             return;
 
