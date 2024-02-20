@@ -2,6 +2,7 @@
 
 import { AnimationProps, motion } from "framer-motion";
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface SlideDownProp {
   children: ReactNode;
@@ -21,7 +22,7 @@ const SlideDown = ({ children, delay, className }: SlideDownProp) => {
   return (
     <motion.div
       {...slideDownProps}
-      className={className ?? ""}
+      className={cn("w-full", className)}
     >
       {children}
     </motion.div>
