@@ -14,7 +14,7 @@ import { useModalStore } from "@/store/use-modal-store";
 const VacationRequestPage = () => {
   const [date, setDate] = useState<Date | null>(new Date());
 
-  const { onOpen } = useModalStore();
+  const { onOpen, openWithAction } = useModalStore();
 
   const defaultSelected: DateRange = {
     from: date,
@@ -75,7 +75,12 @@ const VacationRequestPage = () => {
           whileTap={{
             scale: 0.95,
           }}
-          onTapStart={() => onOpen("vacation")}
+          onTapStart={() =>
+            openWithAction({
+              type: "vacation",
+              payload: range,
+            })
+          }
           disabled={date === null || date === undefined}
         >
           신청
