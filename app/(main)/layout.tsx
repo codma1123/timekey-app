@@ -18,7 +18,7 @@ const MainLayout = ({ children }: { children: ReactNode; params: { userId: strin
     user: "bg-white",
   };
 
-  const lastPath = useMemo(() => path.split("/").at(-1), [path]);
+  const lastPath = useMemo(() => path.split("/").at(2), [path]);
 
   const bgColor = useMemo(() => pathBg[lastPath], [lastPath]);
   const isDarkPage = useMemo(() => lastPath === "overtime" || lastPath === "user", [bgColor]);
