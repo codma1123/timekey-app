@@ -3,20 +3,19 @@
 import IntersectionMotionDiv from "@/components/motions/intersection";
 import SlideDown from "@/components/motions/slide-down";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
 import StrechableAlert from "@/components/ui/stretchable-alert";
 import TopLabel from "@/components/ui/top-label";
-import { useScroll } from "@/hooks/scroll";
 import { useAuthStore } from "@/store/auth";
+import { useBottomOverStore } from "@/store/bottom-over";
 import { CalendarIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { AnimationProps, motion } from "framer-motion";
-import { CalendarDays, List } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, useSyncExternalStore } from "react";
 
 const VacationPage = () => {
   const router = useRouter();
   const { id } = useAuthStore();
+  const { openBottomOverWithPayload } = useBottomOverStore();
+
   const date = 5;
 
   const enterTransition: AnimationProps["animate"] = {
@@ -32,7 +31,7 @@ const VacationPage = () => {
     width: "0px",
     transition: {
       duration: 0,
-      delay: 0.5,
+      delay: 0,
     },
   };
 
@@ -99,8 +98,18 @@ const VacationPage = () => {
           className="w-full relative"
         >
           <Alert className="text-white bg-zinc-600 ring-0 border-0 rounded-2xl">
-            <AlertDescription className="flex items-center">
-              {/* badge */}
+            <AlertDescription
+              className="flex items-center"
+              onClick={() =>
+                openBottomOverWithPayload({
+                  type: "vacationDetail",
+                  payload: {
+                    id: index,
+                    date: new Date(),
+                  },
+                })
+              }
+            >
               <motion.div className="absolute top-[-6px] left-[-6px] rounded-full h-4 w-4 bg-emerald-300"></motion.div>
 
               <CalendarIcon className="h-5 w-5" />
