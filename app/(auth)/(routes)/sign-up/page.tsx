@@ -22,7 +22,6 @@ import { Keyboard } from "@capacitor/keyboard";
 import { motion } from "framer-motion";
 import BackSwipe from "@/components/motions/back-swipe";
 import TopLabel from "@/components/ui/top-label";
-import { cn } from "@/lib/utils";
 
 const schema = yup.object().shape({
   email: yup.string().required("필수값 입니다.").email("유효한 이메일 형식이 아닙니다."),
