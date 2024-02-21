@@ -18,11 +18,6 @@ const NavigationBottomMenu = ({ Icon, href, text }: NavigationBottomMenuProps) =
       className={"z-40 flex-1 text-center"}
       onTouchStart={async () => {
         await Haptics.impact({ style: ImpactStyle.Medium });
-    
-        await controls.start({
-          scale: [1.1, 1.2, 1.3],
-          transition: { duration: 0.2 },
-        });
       }}
       whileTap={{ scale: 0.95 }}
       animate={controls}
