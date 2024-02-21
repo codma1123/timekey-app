@@ -4,17 +4,21 @@ import { Calendar } from "@/components/ui/calendar";
 import { ko } from "date-fns/locale";
 
 import TopLabel from "@/components/ui/top-label";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import SlideDown from "@/components/motions/slide-down";
-import { Button } from "@/components/ui/button";
+import { Swiper, SwiperRef, SwiperSlide, useSwiper } from "swiper/react";
+
+import "swiper/css";
 import { motion } from "framer-motion";
 import { DateRange } from "react-day-picker";
 import { useModalStore } from "@/store/use-modal-store";
+import { Textarea } from "@/components/ui/textarea";
 
 const VacationRequestPage = () => {
-  const [date, setDate] = useState<Date | null>(new Date());
+  const [date] = useState<Date | null>(null);
 
-  const { onOpen, openWithAction } = useModalStore();
+  const { openWithAction } = useModalStore();
+  const [currentPage, setCurrentPage] = useState(0);
 
   const defaultSelected: DateRange = {
     from: date,
@@ -25,7 +29,7 @@ const VacationRequestPage = () => {
 
   const isDisableDate = (disableDate: Date) => {
     const day = disableDate.getDay();
-    return day === 0 || day === 6; // 0은 일요일, 6은 토요일
+    return day === 0 || day === 6;
   };
 
   const diffrence = useMemo(() => {
@@ -36,6 +40,10 @@ const VacationRequestPage = () => {
     return Math.floor(diffInMs / oneDay) + 1;
   }, [range]);
 
+  const textarea = useRef<HTMLTextAreaElement | null>(null);
+
+  const swiperRef = useRef<SwiperRef | null>(null);
+
   return (
     <>
       <TopLabel
@@ -44,48 +52,69 @@ const VacationRequestPage = () => {
         label="연차 신청"
       />
 
-      <SlideDown>
-        <div className="text-zinc-200 my-2 text-xl font-bold">신청할 날짜를 선택 해 주세요.</div>
-      </SlideDown>
-      <SlideDown delay={0.3}>
-        <Calendar
-          mode="range"
-          disabled={isDisableDate}
-          selected={range}
-          locale={ko}
-          onSelect={setRange}
-          className="rounded-md bg-zinc-700 ring-0 border-0 text-white text-xl justify-center flex items-center"
-          classNames={{
-            day_selected: "bg-white text-zinc-700 font-extrabold",
-            nav_button: "border-0",
-            cell: "w-12 h-12 flex justify-center my-[-4px]",
-            day: "w-12 h-12text-xl text-center rounded-2xl transition-all",
-            caption_label: "text-2xl font-bold",
-            head_cell: "w-12 h-12",
-          }}
-        />
-      </SlideDown>
-
-      <SlideDown
-        delay={0.4}
-        className="mt-auto "
+      <Swiper
+        ref={swiperRef}
+        className="h-screen w-full"
+        allowTouchMove={false}
       >
-        <motion.button
-          className="mb-28 py-4 w-full bg-white text-2xl text-primary-dark font-bold rounded-2xl"
-          whileTap={{
-            scale: 0.95,
-          }}
-          onTapStart={() =>
+        <SwiperSlide className="h-screen flex">
+          <SlideDown>
+            <div className="text-zinc-200 my-2 text-xl font-bold">신청할 날짜를 선택 해 주세요.</div>
+          </SlideDown>
+
+          <SlideDown delay={0.3}>
+            <Calendar
+              mode="range"
+              disabled={isDisableDate}
+              selected={range}
+              locale={ko}
+              onSelect={setRange}
+              className="rounded-md bg-zinc-700 ring-0 border-0 text-white text-xl justify-center flex items-center"
+              classNames={{
+                day_selected: "bg-white text-zinc-700 font-extrabold",
+                nav_button: "border-0",
+                cell: "w-12 h-12 flex justify-center my-[-4px]",
+                day: "w-12 h-12text-xl text-center rounded-2xl transition-all",
+                caption_label: "text-2xl font-bold",
+                head_cell: "w-12 h-12",
+              }}
+            />
+          </SlideDown>
+        </SwiperSlide>
+        <SwiperSlide>
+          <SlideDown>
+            <div className="text-zinc-200 my-2 text-xl font-bold">연차 사유를 작성해주세요. (선택)</div>
+
+            <textarea
+              ref={textarea}
+              placeholder="쉴래요 ~~~~"
+              className="w-full h-24 mt-2 p-4 bg-zinc-600 text-white focus:border-emerald-400 focus:border-2 box-border focus:bg-zinc-700 rounded-xl transition-all"
+            ></textarea>
+          </SlideDown>
+        </SwiperSlide>
+      </Swiper>
+
+      <motion.button
+        className="mt-auto mb-28 py-4 w-full text-xl bg-emerald-400 text-white rounded-2xl"
+        initial={{ y: 300 }}
+        animate={{ y: range === null || range === undefined || !range.to || !range.from || !range.to.toDateString() ? 300 : 0 }}
+        transition={{ duration: 0.4, ease: "circInOut" }}
+        onClick={() => {
+          if (swiperRef.current.swiper.activeIndex) {
             openWithAction({
               type: "vacation",
               payload: range,
-            })
+            });
+          } else {
+            swiperRef.current.swiper.slideNext();
+            setTimeout(() => textarea?.current.focus(), 500);
           }
-          disabled={date === null || date === undefined}
-        >
-          신청
-        </motion.button>
-      </SlideDown>
+
+          setCurrentPage(swiperRef.current.swiper.activeIndex);
+        }}
+      >
+        {currentPage ? "연차 신청" : "다음"}
+      </motion.button>
     </>
   );
 };
