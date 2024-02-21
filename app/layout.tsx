@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { ModalProvider } from "@/components/provider/modal-provider";
 import AppProvider from "@/components/provider/app";
+import { BottomOverProvider } from "@/components/provider/bottom-over-provider";
 
 export const metadata: Metadata = {
   title: "TIMEKEY",
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <ModalProvider />
+      <BottomOverProvider />
       <AppProvider />
       {children}
     </html>
