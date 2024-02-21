@@ -6,7 +6,7 @@ import { MoonIcon } from "@radix-ui/react-icons";
 import FullSheet from "@/components/ui/full-sheet";
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import SlideDown from "@/components/modals/motions/slide-down";
+import SlideDown from "@/components/motions/slide-down";
 
 const OvertimePage = () => {
   return (
