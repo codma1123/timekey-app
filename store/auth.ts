@@ -7,6 +7,7 @@ import { create, useStore } from "zustand";
 const initial = {
   isAuthenticate: false,
   user: null,
+  id: null,
 };
 
 export const useAuthStore = create<AuthState & AuthActions>((set) => ({
@@ -39,5 +40,9 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
 
   signOut: () => {
     set({ isAuthenticate: false, user: null });
+  },
+
+  setId: (id: string | number) => {
+    set({ id });
   },
 }));
