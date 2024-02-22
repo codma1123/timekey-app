@@ -2,11 +2,17 @@ import { AnyAction } from "@/store/types";
 import { DateRange } from "react-day-picker";
 import { create } from "zustand";
 
-export type ModalType = "ealryWorkoff" | "workoff" | "vacation";
+export type ModalType = "ealryWorkoff" | "workoff" | "vacation" | "vacation-cancel";
 
 type VacationRequestModalAction = AnyAction<"vacation", DateRange>;
+type VacationRequestCancelModalAction = AnyAction<
+  "vacation-cancel",
+  {
+    id: any;
+  }
+>;
 
-type ModalActions = VacationRequestModalAction;
+type ModalActions = VacationRequestModalAction | VacationRequestCancelModalAction;
 
 interface ModalStoreState {
   isOpen: boolean;
