@@ -1,20 +1,21 @@
 "use client";
 
-import IntersectionMotionDiv from "@/components/motions/intersection";
+import VacationList from "@/app/(main)/(routes)/[userId]/vacation/vacation-list";
+
 import SlideDown from "@/components/motions/slide-down";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import StrechableAlert from "@/components/ui/stretchable-alert";
 import TopLabel from "@/components/ui/top-label";
 import { useAuthStore } from "@/store/auth";
-import { useBottomOverStore } from "@/store/bottom-over";
-import { CalendarIcon, PlusCircledIcon } from "@radix-ui/react-icons";
+import { CalendarIcon } from "@radix-ui/react-icons";
 import { AnimationProps, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
 const VacationPage = () => {
   const router = useRouter();
+
   const { id } = useAuthStore();
-  const { openBottomOverWithPayload } = useBottomOverStore();
 
   const date = 5;
 
@@ -35,10 +36,14 @@ const VacationPage = () => {
     },
   };
 
+  const onRequestClick = useCallback(() => {
+    router.push(`/${id}/vacation/request`, {});
+  }, [router, id]);
+
   return (
     <>
       <TopLabel
-        scrolledClassName="bg-primary-dark top-0 block"
+        scrolledClassName="bg-white top-0 block"
         titleClassName="text-zinc-200"
         label="연차"
       />
@@ -65,60 +70,25 @@ const VacationPage = () => {
         </StrechableAlert>
 
         <Alert className="w-full text-white bg-zinc-600 ring-0 border-0 mt-4 rounded-2xl">
-          <AlertDescription className="flex w-full items-center">
-            <CalendarIcon className="h-4 w-4" />
-            <span className="ml-2">잔여 연차</span>
-            <span className="ml-auto mr-2 text-2xl">{date}</span>
+          <AlertDescription className="pr-2">
+            <div className="flex w-full items-center">
+              <CalendarIcon className="h-4 w-4" />
+              <span className="ml-2">잔여 연차</span>
+              <span className="ml-auto text-2xl">{date}</span>
+            </div>
           </AlertDescription>
         </Alert>
-      </SlideDown>
 
-      <SlideDown delay={0.3}>
         <motion.button
-          className="py-4 w-full text-xl bg-emerald-400 text-white  transition-all duration-600 rounded-2xl "
+          className="py-4 w-full text-xl bg-emerald-400 text-white transition-transform duration-600 rounded-2xl mt-4"
           whileTap={{ scale: 0.95 }}
-          onClick={() => router.push(`/${id}/vacation/request`)}
+          onClick={onRequestClick}
         >
           연차 신청
         </motion.button>
       </SlideDown>
-      <SlideDown
-        className="flex flex-col gap-4"
-        delay={0.4}
-      >
-        <div className="w-full text-white mt-4 flex">
-          <div className="text-xl font-bold">연차 내역</div>
-          <div className="ml-auto flex gap-x-2 items-center"></div>
-        </div>
-      </SlideDown>
 
-      {Array.from({ length: 10 }).map((sample, index) => (
-        <IntersectionMotionDiv
-          key={index}
-          className="w-full relative"
-        >
-          <Alert className="text-white bg-zinc-600 ring-0 border-0 rounded-2xl">
-            <AlertDescription
-              className="flex items-center"
-              onClick={() =>
-                openBottomOverWithPayload({
-                  type: "vacationDetail",
-                  payload: {
-                    id: index,
-                    date: new Date(),
-                  },
-                })
-              }
-            >
-              <motion.div className="absolute top-[-6px] left-[-6px] rounded-full h-4 w-4 bg-emerald-300"></motion.div>
-
-              <CalendarIcon className="h-5 w-5" />
-              <span className="ml-4">{new Date().toLocaleDateString()}</span>
-              <span className="ml-auto text-emerald-300 font-bold text-lg">연차</span>
-            </AlertDescription>
-          </Alert>
-        </IntersectionMotionDiv>
-      ))}
+      <VacationList id={"3"} />
     </>
   );
 };
