@@ -10,7 +10,7 @@ import SlideDown from "@/components/motions/slide-down";
 
 const OvertimePage = () => {
   return (
-    <>
+    <main className="flex flex-col items-center min-h-screen min-w-screen gap-4 pt-16 px-6 text-white">
       <Title
         title="야근"
         Icon={MoonIcon}
@@ -46,7 +46,7 @@ const OvertimePage = () => {
         beforeSlideContent={<div>전</div>}
         afterSlideContent={<div>후</div>}
       />
-    </>
+    </main>
   );
 };
 

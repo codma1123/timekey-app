@@ -19,7 +19,7 @@ const UserPage = () => {
   }, []);
 
   return (
-    <>
+    <main className="flex flex-col items-center min-h-screen min-w-screen gap-4 pt-16 px-6 ">
       <Title
         className="text-black"
         title="사용자"
@@ -68,7 +68,7 @@ const UserPage = () => {
           </CommandGroup>
         </CommandList>
       </Command>
-    </>
+    </main>
   );
 };
 

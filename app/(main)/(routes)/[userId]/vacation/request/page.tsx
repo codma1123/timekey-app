@@ -6,13 +6,12 @@ import { ko } from "date-fns/locale";
 import TopLabel from "@/components/ui/top-label";
 import React, { useMemo, useRef, useState } from "react";
 import SlideDown from "@/components/motions/slide-down";
-import { Swiper, SwiperRef, SwiperSlide, useSwiper } from "swiper/react";
+import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import { motion } from "framer-motion";
 import { DateRange } from "react-day-picker";
 import { useModalStore } from "@/store/use-modal-store";
-import { Textarea } from "@/components/ui/textarea";
 
 const VacationRequestPage = () => {
   const [date] = useState<Date | null>(null);
@@ -45,7 +44,7 @@ const VacationRequestPage = () => {
   const swiperRef = useRef<SwiperRef | null>(null);
 
   return (
-    <>
+    <main className="flex flex-col items-center h-screen min-w-screen gap-4 pt-16 px-6 text-white">
       <TopLabel
         scrolledClassName="bg-primary-dark top-0 block"
         titleClassName="text-zinc-200"
@@ -73,7 +72,7 @@ const VacationRequestPage = () => {
               classNames={{
                 day_selected: "bg-white text-zinc-700 font-extrabold",
                 nav_button: "border-0",
-                cell: "w-12 h-12 flex justify-center my-[-4px]",
+                cell: "w-12 h-12 flex ㅊjustify-center my-[-4px]",
                 day: "w-12 h-12text-xl text-center rounded-2xl transition-all",
                 caption_label: "text-2xl font-bold",
                 head_cell: "w-12 h-12",
@@ -98,7 +97,7 @@ const VacationRequestPage = () => {
         className="mt-auto mb-28 py-4 w-full text-xl bg-emerald-400 text-white rounded-2xl"
         initial={{ y: 300 }}
         animate={{ y: range === null || range === undefined || !range.to || !range.from || !range.to.toDateString() ? 300 : 0 }}
-        transition={{ duration: 0.4, ease: "circInOut" }}
+        transition={{ duration: 0.4 }}
         onClick={() => {
           if (swiperRef.current.swiper.activeIndex) {
             openWithAction({
@@ -115,7 +114,7 @@ const VacationRequestPage = () => {
       >
         {currentPage ? "연차 신청" : "다음"}
       </motion.button>
-    </>
+    </main>
   );
 };
 
