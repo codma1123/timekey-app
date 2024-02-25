@@ -7,6 +7,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import StrechableAlert from "@/components/ui/stretchable-alert";
 import TopLabel from "@/components/ui/top-label";
 import { useAuthStore } from "@/store/auth";
+import { useBottomOverStore } from "@/store/bottom-over";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { AnimationProps, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -16,6 +17,7 @@ const VacationPage = () => {
   const router = useRouter();
 
   const { id } = useAuthStore();
+  const { isOpen } = useBottomOverStore();
 
   const date = 5;
 
@@ -41,9 +43,9 @@ const VacationPage = () => {
   }, [router, id]);
 
   return (
-    <>
+    <main className="flex flex-col items-center min-h-screen min-w-screen gap-4 pt-16 px-6 text-white">
       <TopLabel
-        scrolledClassName="bg-white top-0 block"
+        scrolledClassName="bg-white top-0"
         titleClassName="text-zinc-200"
         label="연차"
       />
@@ -59,7 +61,7 @@ const VacationPage = () => {
                   className="rounded-lg h-4 bg-gradient-to-r from-emerald-500 to-emerald-200"
                   initial={{ width: "0px" }}
                   animate={isOpen ? enterTransition : exitTransition}
-                ></motion.div>
+                />
               </div>
             </>
           )}
@@ -89,7 +91,7 @@ const VacationPage = () => {
       </SlideDown>
 
       <VacationList id={"3"} />
-    </>
+    </main>
   );
 };
 
