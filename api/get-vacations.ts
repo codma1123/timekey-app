@@ -1,4 +1,4 @@
-import { Vacation } from "@/api/types";
+import { Vacation } from "@/types/vacation";
 import { delay } from "@/lib/utils";
 
 export const getVacations = async (): Promise<Vacation[]> => {
@@ -27,6 +27,34 @@ export const getVacations = async (): Promise<Vacation[]> => {
     },
     {
       id: "4",
+      date: new Date(),
+      allowed: false,
+      status: "done",
+      reason: "내맘",
+    },
+    {
+      id: "5",
+      date: new Date(),
+      allowed: false,
+      status: "done",
+      reason: "내맘",
+    },
+    {
+      id: "5",
+      date: new Date(),
+      allowed: false,
+      status: "done",
+      reason: "내맘",
+    },
+    {
+      id: "5",
+      date: new Date(),
+      allowed: false,
+      status: "done",
+      reason: "내맘",
+    },
+    {
+      id: "5",
       date: new Date(),
       allowed: false,
       status: "done",

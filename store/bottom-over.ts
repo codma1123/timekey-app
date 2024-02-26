@@ -1,4 +1,4 @@
-import { Vacation } from "@/api/types";
+import { Vacation } from "@/types/vacation";
 import { AnyAction } from "@/store/types";
 import { create } from "zustand";
 
