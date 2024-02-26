@@ -1,14 +1,18 @@
 import SlideDown from "@/components/motions/slide-down";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useToast } from "@/components/ui/use-toast";
 import { delay } from "@/lib/utils";
+import { useAuthStore } from "@/store/auth";
 import { useGlobalLoading } from "@/store/global-loading";
 import { useModalStore } from "@/store/use-modal-store";
 import { useRouter } from "next/navigation";
 
 const VacationModal = () => {
-  const { isOpen, modalType, modalData, onClose } = useModalStore();
+  const { isOpen, modalType, onClose } = useModalStore();
   const { setLoading } = useGlobalLoading();
+  const { toast } = useToast();
+  const { id } = useAuthStore();
 
   const isModalOpen = isOpen && modalType === "vacation";
   const router = useRouter();
@@ -40,7 +44,12 @@ const VacationModal = () => {
                 setLoading(true);
                 await delay(500);
                 setLoading(false);
-                router.back();
+                router.push(`/$${id}/vacation`);
+                await delay(600);
+
+                toast({
+                  description: "연차 신청이 완료되었습니다.",
+                });
               }}
             >
               연차 신청
