@@ -1,20 +1,20 @@
 "use client";
 
-import { Vacation } from "@/api/types";
+import { Vacation, VacationStatusMap } from "@/types/vacation";
 import IntersectionMotionDiv from "@/components/motions/intersection";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useBottomOverStore } from "@/store/bottom-over";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
 import React from "react";
+import { cn } from "@/lib/utils";
 
 const VacationItem = ({ vacation }: { vacation: Vacation }) => {
-  vacation;
   const { openBottomOverWithPayload } = useBottomOverStore();
 
   return (
     <IntersectionMotionDiv className="w-full relative">
-      <Alert className="text-white bg-zinc-600 ring-0 border-0 rounded-2xl">
+      <Alert className="text-white bg-zinc-600 ring-0 border-0 rounded-2xl active:ring-1 active:ring-emerald-400 transition-[box-shadow] duration-200">
         <AlertDescription
           className="flex items-center"
           onClick={() =>
@@ -28,7 +28,7 @@ const VacationItem = ({ vacation }: { vacation: Vacation }) => {
 
           <CalendarIcon className="h-5 w-5" />
           <span className="ml-4">{new Date().toLocaleDateString()}</span>
-          <span className="ml-auto text-emerald-300 font-bold text-lg">연차</span>
+          <span className={cn("ml-auto text-lg font-bold", VacationStatusMap[vacation.status].color)}>{VacationStatusMap[vacation.status].text}</span>
         </AlertDescription>
       </Alert>
     </IntersectionMotionDiv>

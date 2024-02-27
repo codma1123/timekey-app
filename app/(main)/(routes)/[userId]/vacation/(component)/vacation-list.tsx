@@ -1,5 +1,5 @@
 import { getVacations } from "@/api/get-vacations";
-import VacationItem from "@/app/(main)/(routes)/[userId]/vacation/vacation-item";
+import VacationItem from "@/app/(main)/(routes)/[userId]/vacation/(component)/vacation-item";
 
 import React from "react";
 

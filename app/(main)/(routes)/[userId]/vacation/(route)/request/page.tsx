@@ -94,7 +94,7 @@ const VacationRequestPage = () => {
       </Swiper>
 
       <motion.button
-        className="mt-auto mb-28 py-4 w-full text-xl bg-emerald-400 text-white rounded-2xl"
+        className="mt-auto mb-32 py-4 w-full text-xl bg-emerald-400 text-white rounded-2xl"
         initial={{ y: 300 }}
         animate={{ y: range === null || range === undefined || !range.to || !range.from || !range.to.toDateString() ? 300 : 0 }}
         transition={{ duration: 0.4 }}
