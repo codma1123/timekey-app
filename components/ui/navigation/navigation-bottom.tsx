@@ -6,9 +6,10 @@ import { MoonIcon, LockClosedIcon, PersonIcon, RocketIcon } from "@radix-ui/reac
 import { IconProps } from "@radix-ui/react-icons/dist/types";
 import NavigationBottomMenu from "@/components/ui/navigation/navigation-bottom-menu";
 import { useParams } from "next/navigation";
+import { LucideIcon, ScrollText } from "lucide-react";
 
 export type BottomNavMenu = {
-  Icon: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>>;
+  Icon: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>> | LucideIcon;
   text: string;
   href: string;
 };
@@ -24,9 +25,9 @@ const NavigationBottom = ({ isDarkPage }: { isDarkPage: boolean }) => {
         href: `/${params.userId}/home`,
       },
       {
-        Icon: MoonIcon,
-        text: "야근",
-        href: `/${params.userId}/overtime`,
+        Icon: ScrollText,
+        text: "근무 기록",
+        href: `/${params.userId}/report`,
       },
       {
         Icon: RocketIcon,

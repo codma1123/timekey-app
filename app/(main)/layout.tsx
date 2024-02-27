@@ -14,7 +14,7 @@ const MainLayout = ({ children }: { children: ReactNode; params: { userId: strin
 
   const pathBg = {
     home: "bg-primary",
-    overtime: "bg-overtime",
+    report: "bg-overtime",
     vacation: "bg-zinc-700",
     user: "bg-white",
   };
@@ -22,7 +22,7 @@ const MainLayout = ({ children }: { children: ReactNode; params: { userId: strin
   const lastPath = useMemo(() => path.split("/").at(2), [path]);
 
   const bgColor = useMemo(() => pathBg[lastPath], [lastPath]);
-  const isDarkPage = useMemo(() => lastPath === "overtime" || lastPath === "user", [bgColor]);
+  const isDarkPage = useMemo(() => lastPath === "report" || lastPath === "user", [bgColor]);
 
   return (
     <body className={cn(bgColor, DOSIS.className, IBM_KR.className)}>
