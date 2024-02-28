@@ -22,6 +22,9 @@ const SlideDown = ({ children, delay, className }: SlideDownProp) => {
   return (
     <motion.div
       {...slideDownProps}
+      transition={{
+        
+      }}
       className={cn("w-full", className)}
     >
       {children}
