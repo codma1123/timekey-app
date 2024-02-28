@@ -7,7 +7,7 @@ import { ReactNode, useState } from "react";
 
 interface StrechableAlertProps extends MotionProps {
   children: ReactNode;
-  extend?: (isOpen: boolean) => ReactNode;
+  extend?: ((isOpen: boolean) => ReactNode) | ReactNode;
   className?: string;
   alertClassName?: string;
 }
@@ -24,7 +24,7 @@ const StrechableAlert = ({ children, className, alertClassName, animate, transit
       animate={{ height: isOpen ? "200px" : "66px" }}
       transition={{ duration: 0.5, ease: "backInOut" }}
     >
-      <Alert className={cn("text-white bg-zinc-600 ring-0 border-0 mt-4 h-full rounded-2xl", alertClassName)}>
+      <Alert className={cn("text-white ring-0 border-0 mt-4 h-full rounded-2xl", alertClassName)}>
         <AlertDescription className="flex w-full items-center ">{children}</AlertDescription>
         <motion.div
           className="overflow-hidden"
@@ -32,7 +32,7 @@ const StrechableAlert = ({ children, className, alertClassName, animate, transit
           animate={{ opacity: isOpen ? 1 : 0, y: isOpen ? 0 : -5 }}
           transition={{ delay: 0.3, duration: 0.2 }}
         >
-          {extend && extend(isOpen)}
+          {extend && typeof extend === "function" ? extend(isOpen) : (extend as ReactNode)}
         </motion.div>
       </Alert>
     </motion.div>
