@@ -3,9 +3,10 @@ import { Haptics, ImpactStyle } from "@capacitor/haptics";
 import React, { ForwardRefExoticComponent, RefAttributes, memo } from "react";
 import Link from "next/link";
 import { IconProps } from "@radix-ui/react-icons/dist/types";
+import { LucideIcon } from "lucide-react";
 
 interface NavigationBottomMenuProps {
-  Icon: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>>;
+  Icon: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>> | LucideIcon;
   href: string;
   text: string;
 }
