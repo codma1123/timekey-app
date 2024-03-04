@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { Haptics, HapticsImpactStyle, ImpactStyle } from "@capacitor/haptics";
 import { MotionProps, motion } from "framer-motion";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
@@ -34,9 +35,10 @@ const IntersectionMotionDiv = ({ children, className, ...rest }: IntersectionMot
       ref={ref}
       {...rest}
       className={cn(className)}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : -20 }}
       transition={{ duration: 0.2 }}
+      onTap={async () => await Haptics.impact({ style: ImpactStyle.Light })}
     >
       {children}
     </motion.div>
