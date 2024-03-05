@@ -10,14 +10,13 @@ interface IntersectionMotionDivProps extends MotionProps {
   className?: string;
 }
 
-const IntersectionMotionDiv = ({ children, className, ...rest }: IntersectionMotionDivProps) => {
+const IntersectionMotionDiv = ({ children, className, initial, animate, ...rest }: IntersectionMotionDivProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-    entries.forEach((entry) => setIsVisible(entry.isIntersecting));
+    entries.forEach((entry) => !isVisible && setIsVisible(entry.isIntersecting));
   };
-
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0.5,

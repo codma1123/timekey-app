@@ -17,3 +17,15 @@ input {
 textarea {
   outline: none;
 }
+
+*::-webkit-scrollbar {
+  width: 8px; /* 스크롤바 너비 */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #333; /* 스크롤바의 thumb 색상 지정 */
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #f4f4f4; /* 스크롤바 트랙의 색상 지정 */
+}

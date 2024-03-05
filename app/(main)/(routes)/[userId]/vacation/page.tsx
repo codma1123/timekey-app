@@ -1,13 +1,12 @@
 "use client";
 
-import VacationList from "@/app/(main)/(routes)/[userId]/vacation/vacation-list";
+import VacationList from "@/app/(main)/(routes)/[userId]/vacation/(component)/vacation-list";
 
 import SlideDown from "@/components/motions/slide-down";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import StrechableAlert from "@/components/ui/stretchable-alert";
 import TopLabel from "@/components/ui/top-label";
 import { useAuthStore } from "@/store/auth";
-import { useBottomOverStore } from "@/store/bottom-over";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { AnimationProps, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -17,7 +16,6 @@ const VacationPage = () => {
   const router = useRouter();
 
   const { id } = useAuthStore();
-  const { isOpen } = useBottomOverStore();
 
   const date = 5;
 
@@ -53,9 +51,10 @@ const VacationPage = () => {
       <SlideDown>
         <StrechableAlert
           className="text-white"
+          alertClassName="bg-zinc-600"
           extend={(isOpen) => (
             <>
-              <div className=" mt-6">{new Date().toLocaleDateString()}</div>
+              <div className="mt-6">{new Date().toLocaleDateString()}</div>
               <div className="w-full h-4 rounded-lg bg-zinc-700 overflow-hidden">
                 <motion.div
                   className="rounded-lg h-4 bg-gradient-to-r from-emerald-500 to-emerald-200"

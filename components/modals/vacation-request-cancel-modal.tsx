@@ -19,7 +19,7 @@ const VacationRequestCancelModal = () => {
       open={isModalOpen}
       onOpenChange={onClose}
     >
-      <DialogContent className="sm:max-w-md bg-white w-[90%] rounded-[40px]">
+      <DialogContent className="sm:max-w-md bg-white w-[90%] rounded-[40px] z-[52]">
         <DialogHeader>
           <DialogTitle className="text-xl">연차 신청 취소</DialogTitle>
 

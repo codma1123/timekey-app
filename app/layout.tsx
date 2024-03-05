@@ -29,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <ModalProvider />
       <BottomOverProvider />
       <AppProvider />
+
       {children}
     </html>
   );

@@ -1,0 +1,347 @@
+{% extends 'base.html' %} {% load static %} {% block header-css %}
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title="RSS 2.0"
+  href="http://www.datatables.net/rss.xml"
+/>
+<!-- Data table CSS -->
+<link
+  href="{% static 'vendor/bower_components/datatables.net-responsive/css/responsive.dataTables.min.css' %}"
+  rel="stylesheet"
+  type="text/css"
+/>
+<!-- Bootstrap Colorpicker CSS -->
+<link
+  href="{% static 'vendor/bower_components/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css' %}"
+  rel="stylesheet"
+  type="text/css"
+/>
+<!-- Bootstrap Datetimepicker CSS -->
+<link
+  href="{% static 'vendor/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}"
+  rel="stylesheet"
+  type="text/css"
+/>
+<!-- Bootstrap Daterangepicker CSS -->
+<link
+  href="{% static 'vendor/bower_components/bootstrap-daterangepicker/daterangepicker.css' %}"
+  rel="stylesheet"
+  type="text/css"
+/>
+
+<style>
+  .font-weight {
+    font-weight: bold;
+    color: #646261;
+  }
+  
+  .project-name {
+    font-size: 2rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: #000;
+  }
+
+  .overall-wrapper {
+    background-color: #fff;
+    padding-top: 1rem;
+    width: calc(100% - .75rem);
+    margin-left: .5rem;
+    height: auto;
+    border: 1px solid rgba(33, 33, 33, 0.1);
+  }
+
+  .overall-table {
+    margin-top: 1rem;
+    border: 1px solid rgba(33, 33, 33, 0.1);
+  }
+
+  .divider {
+    margin: .5rem auto;
+    width: 96%;
+    height: 1px;
+    background-color: rgba(33, 33, 33, 0.1);
+  }
+
+  .error,
+  .loading {
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .summary-row {
+    background-color: rgb(247, 247, 247);
+    color: #3c3c3c;
+    font-weight: 600;
+  }
+
+  th {
+    font-size: 1rem !important;
+    color: #2a2a2a;
+  }
+
+  td {
+    font-size: 1rem !important;
+    color: #181818;
+  }
+
+  select,
+  input {
+    font-size: 1.25rem !important;
+  }
+
+  .summary-background {
+    background-color: rgb(240, 240, 240);
+  }
+  
+</style>
+{% endblock header-css%} {% block content %}
+<div class="container-fluid">
+  <div class="row heading-bg">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+        <h5 class="txt-dark ml-1 mt-2">{{ placeName|default:"" }}</h5>
+        <h5 class="txt-dark ml-1 mt-2">운행 현황 모니터링</h5>
+    </div>
+    <!-- Breadcrumb -->
+    <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+        
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default card-view">
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    <div class="form-wrap">
+                        <form id="search-form">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-10 text-left">기간</label>
+                                        <input class="form-control input-daterange-datepicker" type="text"
+                                            name="daterange" id="daterange" />
+                                    </div>
+                                </div>
+                                {% if request.user.is_superuser %}
+                                <div class="col-lg-3">
+                                    <div class="form-group mb-0">
+                                      <label class="control-label mb-10 text-left">프로젝트</label>
+                                        <select id="project-select" class="form-control">
+                                          {% for project in projects %}
+                                          <option value="{{ project.projectId }}">{{ project.projectName }}</option>
+                                          {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <div class="col-lg-2">
+                                    <div class="form-group mb-0">
+                                        <label class="control-label mb-10 text-left">&nbsp</label>
+                                        <button class="btn-block btn btn-primary" type="submit">검색</button>
+                                    </div>
+                                </div>
+
+                                <div class="refresh-wrapper">
+                                    
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="overall-wrapper">
+          <div>
+            <div class="project-name"></div>
+            
+          </div>
+          
+          <div class="loading">
+            데이터를 불러오는 중 입니다.
+          </div>
+          <div class="success">
+            <div class="table-wrapper"></div>
+          </div>
+          <div class="error">
+          </div>
+          
+          
+        </div>
+      </div>
+    </div>
+    
+</div>
+</div>
+  {% endblock content %} {% block footer-script %}
+  <!-- Data table JavaScript -->
+  <script src="{% static 'vendor/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+  <script src="{% static 'vendor/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+  <script src="{% static 'js/responsive-datatable-data.js' %}"></script>
+  <!-- Moment JavaScript -->
+  <script
+    type="text/javascript"
+    src="{% static 'vendor/bower_components/moment/min/moment-with-locales.min.js' %}"
+  ></script>
+  <!-- Bootstrap Colorpicker JavaScript -->
+  <script src="{% static 'vendor/bower_components/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js' %}"></script>
+  <!-- Bootstrap Datetimepicker JavaScript -->
+  <script
+    type="text/javascript"
+    src="{% static 'vendor/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"
+  ></script>
+  <!-- Bootstrap Daterangepicker JavaScript -->
+  <script src="{% static 'vendor/bower_components/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+  <!-- Form Picker Init JavaScript -->
+  <script src="{% static 'js/form-picker-data.js' %}"></script>
+  <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+  <script type="text/javascript">
+  </script>
+  <script src="{% static "js/state.js" %}"></script>
+  <script src="{% static 'js/sheetjs/xlsx.full.min.js' %}"></script>
+  <script src="{% static 'js/sheetjs/FileSaver.min.js' %}"></script>
+
+  <script type="text/javascript">
+    const BASE_URL = "overall_operation_monitering_api"
+
+    const loadTableData = async () => {
+      const { value: id, innerText: name } = projectSelect?.options[projectSelect.selectedIndex] || { value: null, innerText: null }
+      const url = `${BASE_URL}?${new URLSearchParams(id ? { startDate, endDate, projectId: id } : { startDate, endDate }).toString()}`
+
+      error.invisible();
+      loading.visible();
+      success.invisible();
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        loading.invisible();
+        error.visible();
+        return;
+      }
+
+      const { data, userType } = (await response.json());
+
+      table.html = userType === "superuser" 
+      // superuser
+        ? `
+          <table class="table">
+            <thead>
+              <tr>
+                <th> 현장명 </th>
+                <th class="text-right"> 정상 </th>
+                <th class="text-right"> 확인 </th>
+                <th class="text-right"> 수기등록 </th>
+                <th class="text-right"> 미승인 </th>
+                <th class="text-right"> 반품 </th>
+                <th class="text-right"> 현황 합계(정상+확인+수기) </th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              ${data.places.map((place) => `
+                <tr>
+                  <td> ${place.placeName} </td>
+                  <td class="text-right"> ${(place.normalTotal || 0).toLocaleString()} </td>
+                  <td class="text-right"> ${(place.confirmTotal || 0).toLocaleString()} </td>
+                  <td class="text-right"> ${(place.manualTotal || 0).toLocaleString()} </td>
+                  <td class="text-right"> ${(place.unapprovedTotal || 0).toLocaleString()} </td>
+                  <td class="text-right"> ${(place.returnTotal || 0).toLocaleString()} </td>
+                  <td class="text-right">
+                    ${((place.normalTotal + place.confirmTotal + place.manualTotal) || 0).toLocaleString()} (미승인: ${place.unapprovedTotal || 0}, 반품: ${place.returnTotal || 0})
+                  </td>
+                </tr>
+              `).join('')}
+                <tr class="summary-row">
+                  <td> </td>
+                  <td class="text-right"> 정상 합계</td>
+                  <td class="text-right"> 확인 합계</td>
+                  <td class="text-right"> 수기등록 합계 </td>
+                  <td class="text-right"> 미승인 합계</td>
+                  <td class="text-right"> 반품 합계</td>
+                  <td class="text-right"> 총 현황 합계 </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td class="text-right"> ${(data.projectNormalTotal || 0).toLocaleString()} </td>
+                  <td class="text-right"> ${(data.projectConfirmTotal || 0).toLocaleString()} </td>
+                  <td class="text-right"> ${(data.projectManualTotal || 0).toLocaleString()} </td>
+                  <td class="text-right"> ${(data.projectUnapprovedTotal || 0).toLocaleString()} </td>
+                  <td class="text-right"> ${(data.projectReturnTotal || 0).toLocaleString()} </td>
+                  <td class="text-right">
+                    ${((data.projectNormalTotal + data.projectConfirmTotal + data.projectManualTotal) || 0).toLocaleString()}(미승인: ${data.projectUnapprovedTotal || 0}, 반품: ${data.projectReturnTotal || 0})
+                  </td>
+                </tr>
+            </tbody>
+          </table>
+        ` 
+
+      // manager
+        : `
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="text-right"> 정상 </th>
+                <th class="text-right"> 확인 </th>
+                <th class="text-right"> 수기등록 </th>
+                <th class="text-right"> 미승인 </th>
+                <th class="text-right"> 반품 </th>
+                <th class="text-right"> 현황 합계(정상+확인+수기) </th>
+              </tr>
+            </thead>
+            
+            <tbody>
+                <td class="text-right"> ${(data.normalTotal || 0).toLocaleString()} </td>
+                <td class="text-right"> ${(data.confirmTotal || 0).toLocaleString()} </td>
+                <td class="text-right"> ${(data.manualTotal || 0).toLocaleString()} </td>
+                <td class="text-right"> ${(data.unapprovedTotal || 0).toLocaleString()} </td>
+                <td class="text-right"> ${(data.returnTotal || 0).toLocaleString()} </td>
+                <td class="text-right">
+                  ${((data.normalTotal + data.confirmTotal + data.manualTotal) || 0).toLocaleString()}(미승인: ${data.unapprovedTotal || 0}, 반품: ${data.returnTotal || 0})
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        `;
+      projectName.text = data.projectName || ""; 
+      loading.invisible();
+      success.visible();
+    }
+    
+    const dateFormatter = new Intl.DateTimeFormat('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const today = dateFormatter.format(new Date())
+
+    const loading = useElementController('.loading', { visibility: false });
+    const success = useElementController('.success', { visibility: false });
+    const error = useElementController('.error', { visibility: false });
+    const projectName = useElementController(".project-name")
+    const table = useElementController('.table-wrapper')
+    let startDate = today;
+    let endDate = today;
+    
+    const projectSelect = document.querySelector("#project-select");
+    const daterange = document.querySelector("#daterange")
+    const searchForm = document.querySelector("#search-form");
+
+    $('#daterange').on('apply.daterangepicker', (_, picker) => {
+      startDate = picker.startDate.format('YYYY-MM-DD');
+      endDate = picker.endDate.format('YYYY-MM-DD');
+    });
+
+    searchForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      loadTableData();
+    })
+  </script>
+
+
+  {% endblock footer-script %}
+</div>

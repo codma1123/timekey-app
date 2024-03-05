@@ -19,7 +19,7 @@ const config: CapacitorConfig = {
       presentationOptions: ["badge", "sound", "alert"],
     },
     Keyboard: {
-      resize: KeyboardResize.Native,
+      resize: KeyboardResize.Body,
     },
   },
 };

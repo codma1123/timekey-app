@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { VacationStatusMap } from "@/types/vacation";
+
+import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import ListItem from "@/components/ui/list-item";
-import { Separator } from "@/components/ui/separator";
 import { useBottomOverStore } from "@/store/bottom-over";
 import { useModalStore } from "@/store/use-modal-store";
 import { CalendarIcon } from "@radix-ui/react-icons";
@@ -43,7 +43,7 @@ const VacationDetailBottomOver = () => {
           />
           <ListItem
             title="연차 상태"
-            content={<span className="text-yellow-500">{vacation.status}</span>}
+            content={<span className={VacationStatusMap[vacation.status].color}>{VacationStatusMap[vacation.status].text}</span>}
           />
           <ListItem
             title="연차 사유"
