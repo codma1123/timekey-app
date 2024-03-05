@@ -10,6 +10,7 @@ import React, { HTMLProps, MouseEvent } from "react";
 
 interface TopLabelProps {
   scrolledClassName?: string;
+  scrolledBackgroundColor?: string;
   scrolledColor?: string;
   titleClassName?: string;
   label?: string;
@@ -18,7 +19,7 @@ interface TopLabelProps {
   onClick?: (e: MouseEvent) => void;
 }
 
-const TopLabel = ({ className, label, scrolledClassName, scrolledColor, Icon, titleClassName, ...rest }: TopLabelProps) => {
+const TopLabel = ({ className, label, scrolledClassName, scrolledBackgroundColor, scrolledColor, Icon, titleClassName, ...rest }: TopLabelProps) => {
   const { blocked, scrollToTop } = useScroll({ breakpoint: 20 });
 
   return (
@@ -32,7 +33,7 @@ const TopLabel = ({ className, label, scrolledClassName, scrolledColor, Icon, ti
         transition={{ duration: 0.2 }}
         animate={{
           top: blocked ? "0px" : "-110px",
-          backgroundColor: "rgb(57 51 44)",
+          backgroundColor: scrolledBackgroundColor || "rgb(63 63 70)",
           transition: { duration: 0.2 },
         }}
       ></motion.div>
