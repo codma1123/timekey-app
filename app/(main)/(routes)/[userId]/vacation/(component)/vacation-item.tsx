@@ -6,11 +6,12 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useBottomOverStore } from "@/store/bottom-over";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
-import React from "react";
 import { cn } from "@/lib/utils";
 
 const VacationItem = ({ vacation }: { vacation: Vacation }) => {
-  const { openBottomOverWithPayload } = useBottomOverStore();
+  const openBottomOverWithPayload = useBottomOverStore((state) => state.openBottomOverWithPayload);
+
+  console.log("re");
 
   return (
     <IntersectionMotionDiv className="w-full relative">
