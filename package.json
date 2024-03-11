@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "https": "node server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -15,6 +16,8 @@
     "@capacitor/assets": "^3.0.1",
     "@capacitor/browser": "^5.1.0",
     "@capacitor/core": "^5.5.1",
+    "@capacitor/geolocation": "^5.0.7",
+    "@capacitor/google-maps": "^5.4.1",
     "@capacitor/haptics": "^5.0.6",
     "@capacitor/ios": "^5.5.1",
     "@capacitor/keyboard": "^5.0.6",
