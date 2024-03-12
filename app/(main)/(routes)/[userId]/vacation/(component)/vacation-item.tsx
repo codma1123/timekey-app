@@ -7,14 +7,13 @@ import { useBottomOverStore } from "@/store/bottom-over";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import SlideDown from "@/components/motions/slide-down";
 
 const VacationItem = ({ vacation }: { vacation: Vacation }) => {
   const openBottomOverWithPayload = useBottomOverStore((state) => state.openBottomOverWithPayload);
 
-  console.log("re");
-
   return (
-    <IntersectionMotionDiv className="w-full relative">
+    <SlideDown>
       <Alert className="text-white bg-zinc-600 ring-0 border-0 rounded-2xl active:ring-1 active:ring-emerald-400 transition-[box-shadow] duration-200">
         <AlertDescription
           className="flex items-center"
@@ -32,7 +31,7 @@ const VacationItem = ({ vacation }: { vacation: Vacation }) => {
           <span className={cn("ml-auto text-lg font-bold", VacationStatusMap[vacation.status].color)}>{VacationStatusMap[vacation.status].text}</span>
         </AlertDescription>
       </Alert>
-    </IntersectionMotionDiv>
+    </SlideDown>
   );
 };
 
