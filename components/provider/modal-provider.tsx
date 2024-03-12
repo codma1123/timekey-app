@@ -1,5 +1,6 @@
 "use client";
 
+import BackCaustionModal from "@/components/modals/back-caution-modal";
 import EalryWorkoffModal from "@/components/modals/early-workoff-modal";
 import LoadingModal from "@/components/modals/loading-modal";
 import VacationModal from "@/components/modals/vacation-modal";
@@ -25,6 +26,7 @@ export const ModalProvider = ({}) => {
       <WorkoffModal />
       <VacationModal />
       <VacationRequestCancelModal />
+      <BackCaustionModal />
     </>
   );
 };

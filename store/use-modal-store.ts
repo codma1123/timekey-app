@@ -2,7 +2,7 @@ import { AnyAction } from "@/store/types";
 import { DateRange } from "react-day-picker";
 import { create } from "zustand";
 
-export type ModalType = "ealryWorkoff" | "workoff" | "vacation" | "vacation-cancel";
+export type ModalType = "ealryWorkoff" | "workoff" | "vacation" | "vacation-cancel" | "caution";
 
 type VacationRequestModalAction = AnyAction<"vacation", DateRange>;
 type VacationRequestCancelModalAction = AnyAction<
