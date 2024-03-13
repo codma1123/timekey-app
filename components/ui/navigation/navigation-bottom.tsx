@@ -5,7 +5,7 @@ import React, { ForwardRefExoticComponent, RefAttributes, useMemo } from "react"
 import { MoonIcon, LockClosedIcon, PersonIcon, RocketIcon } from "@radix-ui/react-icons";
 import { IconProps } from "@radix-ui/react-icons/dist/types";
 import NavigationBottomMenu from "@/components/ui/navigation/navigation-bottom-menu";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { LucideIcon, ScrollText } from "lucide-react";
 
 export type BottomNavMenu = {
@@ -14,8 +14,12 @@ export type BottomNavMenu = {
   href: string;
 };
 
-const NavigationBottom = ({ isDarkPage }: { isDarkPage: boolean }) => {
+const NavigationBottom = () => {
   const params = useParams<{ userId: string }>();
+  const path = usePathname();
+
+  const lastPath = useMemo(() => path.split("/").at(2), [path]);
+  const isDarkPage = useMemo(() => lastPath === "report" || lastPath === "user", [path]);
 
   const bottomNavMenus = useMemo<BottomNavMenu[]>(
     () => [
@@ -27,7 +31,7 @@ const NavigationBottom = ({ isDarkPage }: { isDarkPage: boolean }) => {
       {
         Icon: ScrollText,
         text: "근무 기록",
-        href: `/${params.userId}/report`,
+        href: `/${params.userId}/reports`,
       },
       {
         Icon: RocketIcon,
