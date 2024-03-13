@@ -1,62 +1,108 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GoogleMap } from "@capacitor/google-maps";
-import { Undo2 } from "lucide-react";
-import { Haptics, ImpactStyle } from "@capacitor/haptics";
+
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { Geolocation } from "@capacitor/geolocation";
+import BackButton from "@/components/ui/back-button";
+import { Position } from "@/types/position";
+import { Location } from "@/types/location";
+import { LocateFixed } from "lucide-react";
 
-const GoogleMapArea = () => {
+interface GoogleMapAreaProps {
+  locationId?: number;
+  center?: Position;
+  locations?: Location[];
+}
+
+const GoogleMapArea = ({ locationId, locations, center }: GoogleMapAreaProps) => {
   const mapRef = useRef<HTMLElement>();
-
   const router = useRouter();
+  const [userPosition, setUserPosition] = useState<Position | null>(null);
+  const [map, setMap] = useState<GoogleMap>(null);
+  let mapTemp: GoogleMap;
 
-  let newMap: GoogleMap;
+  const onFixedButtonClick = async () => {
+    if (!mapRef.current || !userPosition || !map) {
+      return;
+    }
 
-  const createMap = async () => {
-    if (!mapRef.current) return;
-
-    if (newMap) return;
-
-    console.log(Geolocation.getCurrentPosition());
-
-    newMap = await GoogleMap.create({
-      id: "timekey-map",
-      element: mapRef.current,
-      apiKey: "AIzaSyAqEOHY4jTtu86DH5XPZ9Lc4TEBA3i-zo8",
-      config: {
-        center: {
-          lat: 38,
-          lng: 127,
-        },
-        zoom: 8,
-      },
+    await map.setCamera({
+      coordinate: userPosition,
+      zoom: 14,
+      animate: true,
     });
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      createMap();
-    }, 10);
+    const getUserPosition = async (): Promise<Position> => {
+      const location = await Geolocation.getCurrentPosition();
+      return {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+      };
+    };
+
+    const initUserMarker = async (map: GoogleMap, position: Position): Promise<string> => {
+      if (!map) return;
+
+      const markerId = await map.addMarker({ coordinate: position });
+
+      return markerId;
+    };
+
+    const initLocationMarkers = async () => {
+      if (!map) return;
+
+      await map.addMarkers(
+        locations.map((location) => ({
+          coordinate: location.position,
+          title: `${location.id}`,
+        }))
+      );
+    };
+
+    const initMap = async () => {
+      if (!mapRef.current) return;
+
+      const userPosition = await getUserPosition();
+
+      const _map = await GoogleMap.create({
+        id: "timekey-map",
+        element: mapRef.current,
+
+        apiKey: "AIzaSyAqEOHY4jTtu86DH5XPZ9Lc4TEBA3i-zo8",
+        config: {
+          center: center || userPosition,
+          zoom: 14,
+        },
+      });
+
+      setUserPosition(userPosition);
+      setMap(_map);
+      mapTemp = _map;
+
+      await initUserMarker(_map, userPosition);
+
+      if (locations) {
+        await initLocationMarkers();
+      }
+    };
+
+    initMap().catch((e) => {
+      router.back();
+    });
 
     return () => {
-      newMap?.destroy();
+      map?.destroy();
+      mapTemp?.destroy();
     };
   }, []);
 
   return (
     <div>
-      <motion.button
-        className="absolute top-[7.5%] right-6 group bg-primary-dark p-2 rounded-full z-50"
-        onClick={async () => {
-          await Haptics.impact({ style: ImpactStyle.Medium });
-          router.back();
-        }}
-      >
-        <Undo2 className="w-8 h-8 text-secondary group-active:text-main group-active:scale-110 transition" />
-      </motion.button>
+      <BackButton />
 
       <capacitor-google-map
         ref={mapRef}
@@ -69,6 +115,13 @@ const GoogleMapArea = () => {
           height: "100vh",
         }}
       ></capacitor-google-map>
+
+      <button className="absolute bottom-[15%] right-6 p-2 bg-primary-dark rounded-full z-50">
+        <LocateFixed
+          className="h-8 w-8 text-white"
+          onClick={onFixedButtonClick}
+        />
+      </button>
     </div>
   );
 };
