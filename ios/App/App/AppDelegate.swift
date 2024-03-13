@@ -2,13 +2,22 @@ import UIKit
 import Capacitor
 import KakaoSDKAuth
 import KakaoSDKCommon
+import GoogleMaps
+import CoreLocation
+
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
+    
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        GMSServices.provideAPIKey("AIzaSyAqEOHY4jTtu86DH5XPZ9Lc4TEBA3i-zo8")
+        requestLocationAuthorization()
+
         // Override point for customization after application launch.
         return true
     }
@@ -48,5 +57,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return ApplicationDelegateProxy.shared.application(application, continue: userActivity, restorationHandler: restorationHandler)
     }
     
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+      NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: deviceToken)
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+      NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
+    }
+    
+    let locationManager = CLLocationManager()
+
+    
+    func requestLocationAuthorization() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization() // 또는 requestAlwaysAuthorization()을 사용할 수 있습니다.
+    }
+
 
 }
+
