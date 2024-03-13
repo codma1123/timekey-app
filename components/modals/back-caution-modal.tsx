@@ -3,7 +3,7 @@
 import SlideDown from "@/components/motions/slide-down";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { delay } from "@/lib/utils";
+import { delay } from "@/lib/delay";
 import { useModalStore } from "@/store/use-modal-store";
 import { useRouter } from "next/navigation";
 

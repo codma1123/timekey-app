@@ -2,7 +2,7 @@ import SlideDown from "@/components/motions/slide-down";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { delay } from "@/lib/utils";
+import { delay } from "@/lib/delay";
 import { useAuthStore } from "@/store/auth";
 import { useGlobalLoading } from "@/store/global-loading";
 import { useModalStore } from "@/store/use-modal-store";
