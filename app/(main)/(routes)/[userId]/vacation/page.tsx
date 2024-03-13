@@ -7,11 +7,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import TopLabel from "@/components/ui/top-label";
 
-const getCurrentUserId = (): Promise<number> => new Promise((resolve) => resolve(5));
-
-const VacationPage = async () => {
+const VacationPage = async ({ params }: { params: { userId: number } }) => {
   const date = 5;
-  const id = await getCurrentUserId();
 
   return (
     <main className="flex flex-col items-center min-h-screen min-w-screen gap-4 pt-16 px-6 text-white bg-zinc-700 relative">
@@ -39,7 +36,7 @@ const VacationPage = async () => {
 
       <div className="text-xl w-full text-white font-bold mt-4">연차 내역</div>
 
-      <VacationList id={id} />
+      <VacationList userId={params.userId} />
     </main>
   );
 };
