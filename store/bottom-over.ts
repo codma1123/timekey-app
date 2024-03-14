@@ -2,7 +2,7 @@ import { Vacation } from "@/types/vacation";
 import { AnyAction } from "@/store/types";
 import { create } from "zustand";
 
-type BottomOverType = "vacationDetail";
+type BottomOverType = "vacationDetail" | "location";
 
 type BottomOverActions = AnyAction<"vacationDetail", Vacation>;
 type BottomOverData = BottomOverActions["payload"];

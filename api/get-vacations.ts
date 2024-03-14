@@ -1,7 +1,7 @@
+import { delay } from "@/lib/delay";
 import { Vacation } from "@/types/vacation";
-import { delay } from "@/lib/utils";
 
-export const getVacations = async (): Promise<Vacation[]> => {
+export const getVacations = async (id: number): Promise<Vacation[]> => {
   await delay(200);
   return [
     {

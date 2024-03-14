@@ -6,6 +6,7 @@ import { useTimeStore } from "@/store/time";
 import { AnimationDefinition, easeOut, motion } from "framer-motion";
 import { MouseEvent, useEffect, useState } from "react";
 import { Key, Lock, Unlock } from "lucide-react";
+import { useModalStore } from "@/store/use-modal-store";
 
 interface OutlineMotionButtonProps {
   onAnimationComplete?: (e: AnimationDefinition) => void;
@@ -27,13 +28,15 @@ const OutlineMotionButton = ({ onAnimationComplete, onClick }: OutlineMotionButt
   const { scale } = useScale();
   const { currentTime, setCurrentTime } = useTimeStore();
 
+  const onOpen = useModalStore((state) => state.onOpen);
+
   useEffect(() => {
     const interval = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
   const cns = new Date();
-  cns.setHours(18, 0, 0, 0);
+  cns.setHours(17, 40, 0, 0);
 
   const reducent = getTimeDifference(cns);
   const pathLength = 1 - ((cns.getTime() - currentTime.getTime()) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) / 10;
@@ -64,6 +67,9 @@ const OutlineMotionButton = ({ onAnimationComplete, onClick }: OutlineMotionButt
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.5 }}
+        onClick={() => {
+          onOpen("ealryWorkoff");
+        }}
       >
         {pathLength < 0.5 ? (
           <Unlock

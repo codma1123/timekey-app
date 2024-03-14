@@ -2,7 +2,7 @@ import { delay } from "@/lib/delay";
 import { AuthActions, AuthState, SignInform, SignUpForm, User } from "@/store/auth/type";
 import axios, { AxiosResponse } from "axios";
 import { omit } from "lodash";
-import { create, useStore } from "zustand";
+import { create } from "zustand";
 
 const initial = {
   isAuthenticate: false,

@@ -1,4 +1,5 @@
-import { cn } from "@/lib/utils";
+"use client";
+
 import { useWorkStore } from "@/store/work";
 import { motion, useAnimation } from "framer-motion";
 import { Key } from "lucide-react";

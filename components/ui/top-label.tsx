@@ -25,7 +25,7 @@ const TopLabel = ({ className, label, scrolledClassName, scrolledBackgroundColor
   return (
     <>
       <motion.div
-        className="fixed top-[-110px] w-full h-[110px] z-50"
+        className={cn("fixed top-[-110px] w-full h-[110px] z-50", className)}
         {...rest}
         onClick={(e) => {
           rest.onClick ? rest.onClick(e) : scrollToTop();

@@ -1,6 +1,5 @@
-"use client";
-
-import { AnimationProps, motion } from "framer-motion";
+import { AnimationProps } from "framer-motion";
+import * as motion from "@/components/motions";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -22,9 +21,7 @@ const SlideDown = ({ children, delay, className }: SlideDownProp) => {
   return (
     <motion.div
       {...slideDownProps}
-      transition={{
-        
-      }}
+      transition={{}}
       className={cn("w-full", className)}
     >
       {children}

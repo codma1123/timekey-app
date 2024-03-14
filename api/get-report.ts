@@ -1,12 +1,19 @@
-import { delay } from "@/lib/utils";
-import { ReportSummary } from "@/types/report";
+import { delay } from "@/lib/delay";
+import { Report, ReportSummary } from "@/types/report";
 
-export const getReportSummary = async (): Promise<ReportSummary> => {
-  await delay(100);
+export const getReportSummary = async (userId: number): Promise<ReportSummary> => {
+  await delay(200);
   return {
-    totalWorkDay: 10,
+    totalWorkDay: Number((Math.random() * 1000).toFixed()),
     wholesomeRate: 98,
   };
 };
 
-export const getReport = () => {};
+export const getReport = async (id: number): Promise<Report> => {
+  await delay(300);
+  return {
+    date: new Date(),
+    locationId: 9,
+    id: 2,
+  };
+};

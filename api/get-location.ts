@@ -8,5 +8,6 @@ export const getLocation = (locationId: number): Promise<Location> =>
         lng: 127,
       },
       id: 2,
+      radius: 100,
     })
   );

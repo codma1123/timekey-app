@@ -1,14 +1,15 @@
-import VacationBar from "@/app/(main)/(routes)/[userId]/vacation/(component)/vacation-bar";
-import VacationList from "@/app/(main)/(routes)/[userId]/vacation/(component)/vacation-list";
-import VacationRequest from "@/app/(main)/(routes)/[userId]/vacation/(component)/vacation-request";
+import VacationBar from "@/app/(main)/(routes)/[userId]/vacation/(components)/vacation-bar";
+import VacationList from "@/app/(main)/(routes)/[userId]/vacation/(components)/vacation-list";
+import VacationRequest from "@/app/(main)/(routes)/[userId]/vacation/(components)/vacation-request";
 
 import SlideDown from "@/components/motions/slide-down";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import TopLabel from "@/components/ui/top-label";
 
-const VacationPage = async ({ params }: { params: { userId: number } }) => {
+const VacationPage = ({ params }: { params: { userId: number } }) => {
   const date = 5;
+  const { userId } = params;
 
   return (
     <main className="flex flex-col items-center min-h-screen min-w-screen gap-4 pt-16 px-6 text-white bg-zinc-700 relative">
@@ -36,7 +37,7 @@ const VacationPage = async ({ params }: { params: { userId: number } }) => {
 
       <div className="text-xl w-full text-white font-bold mt-4">연차 내역</div>
 
-      <VacationList userId={params.userId} />
+      <VacationList userId={userId} />
     </main>
   );
 };

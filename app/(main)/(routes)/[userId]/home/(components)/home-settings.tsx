@@ -28,9 +28,14 @@ const HomeSettings = ({ user }: HomeSettingsProps) => {
   };
 
   return (
-    <div className="absolute right-6  flex items-center gap-x-2">
+    <div className="absolute right-6 flex items-center gap-x-2">
       <motion.button className="group bg-primary-dark p-2 rounded-full">
-        <MapPin className="w-8 h-8 text-secondary group-active:text-main group-active:scale-110 transition" />
+        <MapPin
+          className="w-8 h-8 text-secondary group-active:text-main group-active:scale-110 transition"
+          onClick={() => {
+            router.push(`/${id}/home/map`);
+          }}
+        />
       </motion.button>
 
       <DropdownMenu modal>

@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const Loading = () => {
   return (
-    <main className="flex flex-col items-center h-screen min-w-screen gap-4 pt-16 px-6">
+    <main className="flex flex-col items-center min-w-screen gap-4 pt-16 px-6 text-white bg-zinc-700 relative">
       <div className="py-4 text-5xl w-full font-bold text-zinc-200">연차</div>
 
       <Skeleton className="h-16 w-full mt-[13px] rounded-2xl bg-zinc-600" />

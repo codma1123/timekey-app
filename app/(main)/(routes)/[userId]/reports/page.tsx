@@ -1,17 +1,19 @@
-import { ClockIcon } from "@radix-ui/react-icons";
-import SlideDown from "@/components/motions/slide-down";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import TopLabel from "@/components/ui/top-label";
-import { cn } from "@/lib/utils";
-import StrechableAlert from "@/components/ui/stretchable-alert";
-import ReportList from "@/app/(main)/(routes)/[userId]/(component)/report-list";
 import { getReportSummary } from "@/api/get-report";
+
 import PullToRefresh from "@/components/actions/pull-to-refresh";
+import TopLabel from "@/components/ui/top-label";
+import SlideDown from "@/components/motions/slide-down";
+import StrechableAlert from "@/components/ui/stretchable-alert";
+import ReportList from "@/app/(main)/(routes)/[userId]/reports/(components)/report-list";
+import { ClockIcon } from "@radix-ui/react-icons";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { cn } from "@/lib/utils";
 
 const ReportsPage = async ({ params }: { params: { userId: number } }) => {
   const rate = 98;
 
-  const { totalWorkDay, wholesomeRate } = await getReportSummary(params.userId);
+  const { userId } = params;
+  const { totalWorkDay, wholesomeRate } = await getReportSummary(userId);
 
   return (
     <PullToRefresh>
@@ -55,7 +57,7 @@ const ReportsPage = async ({ params }: { params: { userId: number } }) => {
 
         <div className="text-xl w-full text-white font-bold mt-2">근무 내역</div>
 
-        <ReportList />
+        <ReportList userId={userId} />
       </div>
     </PullToRefresh>
   );

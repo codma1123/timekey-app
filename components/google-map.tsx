@@ -9,6 +9,8 @@ import BackButton from "@/components/ui/back-button";
 import { Position } from "@/types/position";
 import { Location } from "@/types/location";
 import { LocateFixed } from "lucide-react";
+import { Haptics, ImpactStyle } from "@capacitor/haptics";
+import { useBottomOverStore } from "@/store/bottom-over";
 
 interface GoogleMapAreaProps {
   locationId?: number;
@@ -16,11 +18,24 @@ interface GoogleMapAreaProps {
   locations?: Location[];
 }
 
+interface LocationMarker {
+  markerId: string;
+  isFocused: boolean;
+  position: Position;
+  radius: number;
+}
+
 const GoogleMapArea = ({ locationId, locations, center }: GoogleMapAreaProps) => {
-  const mapRef = useRef<HTMLElement>();
+  const mapRef = useRef<HTMLElement | null>(null);
   const router = useRouter();
+  const openBottomOver = useBottomOverStore((state) => state.openBottomOver);
+  const closeBottomOver = useBottomOverStore((state) => state.closeBottomOver);
+
   const [userPosition, setUserPosition] = useState<Position | null>(null);
   const [map, setMap] = useState<GoogleMap>(null);
+  const [markers, setMarkers] = useState<LocationMarker[]>([]);
+  const [activeCircleId, setActiveCircleId] = useState<string>(null);
+
   let mapTemp: GoogleMap;
 
   const onFixedButtonClick = async () => {
@@ -28,11 +43,27 @@ const GoogleMapArea = ({ locationId, locations, center }: GoogleMapAreaProps) =>
       return;
     }
 
+    await Haptics.impact({ style: ImpactStyle.Medium });
+
     await map.setCamera({
       coordinate: userPosition,
       zoom: 14,
       animate: true,
+      animationDuration: 4000,
     });
+  };
+
+  const onLocationMarkerClick = async (markerId: string) => {
+    setActiveCircleId(markerId);
+    openBottomOver("location");
+  };
+
+  const onMapClick = async () => {
+    closeBottomOver();
+
+    if (!activeCircleId) return;
+
+    await map.removeCircles([activeCircleId]);
   };
 
   useEffect(() => {
@@ -47,20 +78,34 @@ const GoogleMapArea = ({ locationId, locations, center }: GoogleMapAreaProps) =>
     const initUserMarker = async (map: GoogleMap, position: Position): Promise<string> => {
       if (!map) return;
 
-      const markerId = await map.addMarker({ coordinate: position });
+      const markerId = await map.addMarker({
+        coordinate: position,
+        iconUrl: "icons/map-pin.png",
+      });
 
       return markerId;
     };
 
-    const initLocationMarkers = async () => {
+    const initLocationMarkers = async (map: GoogleMap, locations: Location[]): Promise<string[]> => {
       if (!map) return;
 
-      await map.addMarkers(
-        locations.map((location) => ({
-          coordinate: location.position,
-          title: `${location.id}`,
+      const markerArray = locations.map((location) => ({
+        coordinate: location.position,
+        title: `${location.id}`,
+      }));
+
+      const markerIds = await map.addMarkers(markerArray);
+
+      setMarkers(() =>
+        locations.map((location, i) => ({
+          isFocused: false,
+          markerId: markerArray[i].title,
+          position: location.position,
+          radius: location.radius,
         }))
       );
+
+      return markerIds;
     };
 
     const initMap = async () => {
@@ -68,10 +113,11 @@ const GoogleMapArea = ({ locationId, locations, center }: GoogleMapAreaProps) =>
 
       const userPosition = await getUserPosition();
 
+      mapTemp?.destroy();
+
       const _map = await GoogleMap.create({
         id: "timekey-map",
         element: mapRef.current,
-
         apiKey: "AIzaSyAqEOHY4jTtu86DH5XPZ9Lc4TEBA3i-zo8",
         config: {
           center: center || userPosition,
@@ -80,19 +126,16 @@ const GoogleMapArea = ({ locationId, locations, center }: GoogleMapAreaProps) =>
       });
 
       setUserPosition(userPosition);
+
+      if (map) return;
+      await initUserMarker(_map, userPosition);
+      await initLocationMarkers(_map, locations);
+
       setMap(_map);
       mapTemp = _map;
-
-      await initUserMarker(_map, userPosition);
-
-      if (locations) {
-        await initLocationMarkers();
-      }
     };
 
-    initMap().catch((e) => {
-      router.back();
-    });
+    initMap().catch(() => router.back());
 
     return () => {
       map?.destroy();
@@ -100,8 +143,21 @@ const GoogleMapArea = ({ locationId, locations, center }: GoogleMapAreaProps) =>
     };
   }, []);
 
+  useEffect(() => {
+    const addMarkerListener = async () => {
+      if (!markers || !map) return;
+
+      await map.setOnMarkerClickListener((target) => onLocationMarkerClick(target.title));
+      await map.setOnMapClickListener(onMapClick);
+    };
+
+    addMarkerListener();
+  }, [map, markers]);
+
   return (
     <div>
+      <div className="absolute top-[7.5%] left-6 bg-primary-dark rounded-xl text-sm z-50 p-2 text-white">현재 퇴근 지역에 위치하고 있지 않습니다.</div>
+
       <BackButton />
 
       <capacitor-google-map
@@ -116,7 +172,7 @@ const GoogleMapArea = ({ locationId, locations, center }: GoogleMapAreaProps) =>
         }}
       ></capacitor-google-map>
 
-      <button className="absolute bottom-[15%] right-6 p-2 bg-primary-dark rounded-full z-50">
+      <button className="absolute bottom-[15%] right-6 p-1 bg-primary-dark rounded-full z-50">
         <LocateFixed
           className="h-8 w-8 text-white"
           onClick={onFixedButtonClick}
