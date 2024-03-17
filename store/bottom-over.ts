@@ -1,10 +1,12 @@
 import { Vacation } from "@/types/vacation";
 import { AnyAction } from "@/store/types";
 import { create } from "zustand";
+import { Location } from "@/types/location";
 
 type BottomOverType = "vacationDetail" | "location";
 
-type BottomOverActions = AnyAction<"vacationDetail", Vacation>;
+type BottomOverActions = AnyAction<"vacationDetail", Vacation> | AnyAction<"location", Location>;
+
 type BottomOverData = BottomOverActions["payload"];
 
 interface BottomOverState {
@@ -17,6 +19,7 @@ interface BottomOverAction {
   openBottomOver: (bottomOverType: BottomOverType) => void;
   openBottomOverWithPayload: (action: BottomOverActions) => void;
   closeBottomOver: () => void;
+  clear: () => void;
 }
 
 export const useBottomOverStore = create<BottomOverState & BottomOverAction>((set) => ({
@@ -24,6 +27,9 @@ export const useBottomOverStore = create<BottomOverState & BottomOverAction>((se
   bottomOverType: null,
   bottomOverData: null,
   openBottomOver: (bottomOverType) => set({ isOpen: true, bottomOverType }),
-  openBottomOverWithPayload: ({ payload, type }) => set({ isOpen: true, bottomOverType: type, bottomOverData: payload }),
+  openBottomOverWithPayload: ({ payload, type }) => {
+    set({ isOpen: true, bottomOverType: type, bottomOverData: payload });
+  },
+  clear: () => set({ bottomOverData: null }),
   closeBottomOver: () => set({ isOpen: false }),
 }));

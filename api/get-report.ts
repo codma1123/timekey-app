@@ -10,7 +10,7 @@ export const getReportSummary = async (userId: number): Promise<ReportSummary> =
 };
 
 export const getReport = async (id: number): Promise<Report> => {
-  await delay(300);
+  await delay(100);
   return {
     date: new Date(),
     locationId: 9,

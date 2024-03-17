@@ -1,6 +1,6 @@
 "use client";
 
-import { VacationStatusMap } from "@/types/vacation";
+import { Vacation, VacationStatusMap } from "@/types/vacation";
 
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTrigger } from "@/components/ui/drawer";
 import ListItem from "@/components/ui/list-item";
@@ -9,17 +9,23 @@ import { useModalStore } from "@/store/use-modal-store";
 import { CalendarIcon } from "@radix-ui/react-icons";
 
 const VacationDetailBottomOver = () => {
-  const { isOpen, bottomOverType, bottomOverData: vacation, closeBottomOver } = useBottomOverStore();
+  const { isOpen, bottomOverType, bottomOverData, closeBottomOver, clear } = useBottomOverStore();
   const { openWithAction } = useModalStore();
 
   const isBottomOverOpen = isOpen && bottomOverType === "vacationDetail";
+  const vacationData = bottomOverData as Vacation;
 
-  if (!vacation) return null;
+  if (!vacationData || !vacationData.date) return null;
 
   return (
     <Drawer
       open={isBottomOverOpen}
-      onOpenChange={(e) => !e && closeBottomOver()}
+      onOpenChange={(e) => {
+        if (!e) {
+          closeBottomOver();
+          clear();
+        }
+      }}
     >
       <DrawerTrigger className="hidden"></DrawerTrigger>
       <DrawerContent className="bg-zinc-700 ring-0 outline-none border-none h-[420px] text-white">
@@ -35,19 +41,19 @@ const VacationDetailBottomOver = () => {
 
           <ListItem
             title="신청 날짜"
-            content={vacation.date.toLocaleDateString()}
+            content={vacationData.date.toLocaleDateString()}
           />
           <ListItem
             title="승인 여부"
-            content={<span className={vacation.allowed ? "text-emerald-500" : "text-rose-500"}>{vacation.allowed ? "승인" : "승인 대기중"}</span>}
+            content={<span className={vacationData.allowed ? "text-emerald-500" : "text-rose-500"}>{vacationData.allowed ? "승인" : "승인 대기중"}</span>}
           />
           <ListItem
             title="연차 상태"
-            content={<span className={VacationStatusMap[vacation.status].color}>{VacationStatusMap[vacation.status].text}</span>}
+            content={<span className={VacationStatusMap[vacationData.status].color}>{VacationStatusMap[vacationData.status].text}</span>}
           />
           <ListItem
             title="연차 사유"
-            content={vacation.reason}
+            content={vacationData.reason}
           />
         </DrawerDescription>
 

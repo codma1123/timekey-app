@@ -31,6 +31,10 @@ const GoogleMapArea = ({ locationId, locations, center }: GoogleMapAreaProps) =>
   const openBottomOver = useBottomOverStore((state) => state.openBottomOver);
   const closeBottomOver = useBottomOverStore((state) => state.closeBottomOver);
 
+  useBottomOverStore.subscribe((state, prevState) => {
+    console.log(state, prevState);
+  });
+
   const [userPosition, setUserPosition] = useState<Position | null>(null);
   const [map, setMap] = useState<GoogleMap>(null);
   const [markers, setMarkers] = useState<LocationMarker[]>([]);
