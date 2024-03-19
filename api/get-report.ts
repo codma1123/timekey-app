@@ -5,7 +5,7 @@ export const getReportSummary = async (userId: number): Promise<ReportSummary> =
   await delay(200);
   return {
     totalWorkDay: Number((Math.random() * 1000).toFixed()),
-    wholesomeRate: 98,
+    healthyRate: 98,
   };
 };
 
@@ -14,6 +14,9 @@ export const getReport = async (id: number): Promise<Report> => {
   return {
     date: new Date(),
     locationId: 9,
+    startTime: new Date(),
+    endTime: new Date(),
+    status: "normal",
     id: 2,
   };
 };
