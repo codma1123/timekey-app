@@ -7,10 +7,14 @@ import ListItem from "@/components/ui/list-item";
 import { useBottomOverStore } from "@/store/bottom-over";
 import { useModalStore } from "@/store/use-modal-store";
 import { CalendarIcon } from "@radix-ui/react-icons";
+import { useShallow } from "zustand/react/shallow";
 
 const VacationDetailBottomOver = () => {
-  const { isOpen, bottomOverType, bottomOverData, closeBottomOver, clear } = useBottomOverStore();
-  const { openWithAction } = useModalStore();
+  const [isOpen, bottomOverType, bottomOverData, closeBottomOver, clear] = useBottomOverStore(
+    useShallow((state) => [state.isOpen, state.bottomOverType, state.bottomOverData, state.closeBottomOver, state.clear])
+  );
+
+  const openWithAction = useModalStore((state) => state.openWithAction);
 
   const isBottomOverOpen = isOpen && bottomOverType === "vacationDetail";
   const vacationData = bottomOverData as Vacation;

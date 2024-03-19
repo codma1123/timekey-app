@@ -7,15 +7,18 @@ import { useAuthStore } from "@/store/auth";
 import { useGlobalLoading } from "@/store/global-loading";
 import { useModalStore } from "@/store/use-modal-store";
 import { useRouter } from "next/navigation";
+import { useShallow } from "zustand/react/shallow";
 
 const VacationModal = () => {
-  const { isOpen, modalType, onClose } = useModalStore();
-  const { setLoading } = useGlobalLoading();
+  const router = useRouter();
+
+  const [isOpen, modalType, onClose] = useModalStore(useShallow((state) => [state.isOpen, state.modalType, state.onClose]));
+  const setLoading = useGlobalLoading((state) => state.setLoading);
+  const id = useAuthStore((state) => state.id);
+
   const { toast } = useToast();
-  const { id } = useAuthStore();
 
   const isModalOpen = isOpen && modalType === "vacation";
-  const router = useRouter();
 
   return (
     <Dialog

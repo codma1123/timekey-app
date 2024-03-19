@@ -5,11 +5,12 @@ import { delay } from "@/lib/delay";
 import { useBottomOverStore } from "@/store/bottom-over";
 import { useGlobalLoading } from "@/store/global-loading";
 import { useModalStore } from "@/store/use-modal-store";
+import { useShallow } from "zustand/react/shallow";
 
 const VacationRequestCancelModal = () => {
-  const { isOpen, modalType, onClose } = useModalStore();
-  const { closeBottomOver } = useBottomOverStore();
-  const { setLoading } = useGlobalLoading();
+  const [isOpen, modalType, onClose] = useModalStore(useShallow((state) => [state.isOpen, state.modalType, state.onClose]));
+  const closeBottomOver = useBottomOverStore((state) => state.closeBottomOver);
+  const setLoading = useGlobalLoading((state) => state.setLoading);
 
   const isModalOpen = isOpen && modalType === "vacation-cancel";
 

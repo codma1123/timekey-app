@@ -3,9 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useModalStore } from "@/store/use-modal-store";
+import { useShallow } from "zustand/react/shallow";
 
 const WorkoffModal = () => {
-  const { isOpen, modalType, onClose } = useModalStore();
+  const [isOpen, modalType, onClose] = useModalStore(useShallow((state) => [state.isOpen, state.modalType, state.onClose]));
 
   const isModalOpen = isOpen && modalType === "workoff";
 

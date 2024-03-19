@@ -6,14 +6,11 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { delay } from "@/lib/delay";
 import { useModalStore } from "@/store/use-modal-store";
 import { useRouter } from "next/navigation";
+import { useShallow } from "zustand/react/shallow";
 
 const BackCaustionModal = () => {
   const router = useRouter();
-
-  const isOpen = useModalStore((state) => state.isOpen);
-  const modalType = useModalStore((state) => state.modalType);
-  const onClose = useModalStore((state) => state.onClose);
-
+  const [isOpen, modalType, onClose] = useModalStore(useShallow((state) => [state.isOpen, state.modalType, state.onClose]));
   const isModalOpen = isOpen && modalType === "caution";
 
   return (

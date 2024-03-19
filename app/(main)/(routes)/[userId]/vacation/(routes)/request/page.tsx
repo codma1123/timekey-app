@@ -3,7 +3,6 @@
 import { Calendar } from "@/components/ui/calendar";
 import { ko } from "date-fns/locale";
 
-import TopLabel from "@/components/ui/top-label";
 import React, { useMemo, useRef, useState } from "react";
 import SlideDown from "@/components/motions/slide-down";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
@@ -12,8 +11,6 @@ import "swiper/css";
 import { motion } from "framer-motion";
 import { DateRange, DaySelectionMode } from "react-day-picker";
 import { useModalStore } from "@/store/use-modal-store";
-import { delay } from "@/lib/delay";
-import { useRouter } from "next/navigation";
 import { CalendarClock, CalendarIcon, Undo2 } from "lucide-react";
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
 import Title from "@/components/ui/title";
@@ -21,9 +18,9 @@ import Title from "@/components/ui/title";
 const VacationRequestPage = () => {
   const [date] = useState<Date | null>(null);
 
-  const { openWithAction } = useModalStore();
+  const openWithAction = useModalStore((state) => state.openWithAction);
+
   const [currentPage, setCurrentPage] = useState(0);
-  const router = useRouter();
 
   const defaultSelected: DateRange = {
     from: date,
@@ -60,7 +57,7 @@ const VacationRequestPage = () => {
     classNames: {
       day_selected: "bg-white text-zinc-700 font-extrabold",
       nav_button: "border-0",
-      cell: "w-12 h-12 flex ㅊjustify-center my-[-4px]",
+      cell: "w-12 h-12 flex justify-center my-[-4px]",
       day: "w-12 h-12text-xl text-center rounded-2xl transition-all",
       caption_label: "text-2xl font-bold",
       head_cell: "w-12 h-12",
