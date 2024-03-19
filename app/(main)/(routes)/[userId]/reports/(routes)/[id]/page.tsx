@@ -2,6 +2,7 @@ import { getReport } from "@/api/get-report";
 import ReportLocation from "@/app/(main)/(routes)/[userId]/reports/(routes)/[id]/(component)/report-location";
 import SlideDown from "@/components/motions/slide-down";
 import BackButton from "@/components/ui/back-button";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { ReportStatusMap } from "@/types/report";
 import { ReactNode } from "react";
@@ -25,6 +26,12 @@ const ReportPage = async ({ params }: { params: ReportPageParams }) => {
   const reportStatus = ReportStatusMap[status];
   const timeDiffrence = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
 
+  const standardStartTime = new Date(date);
+  standardStartTime.setHours(8, 50, 0, 0);
+
+  const standardEndTime = new Date(date);
+  standardEndTime.setHours(17, 40, 0, 0);
+
   return (
     <div className="flex flex-col items-center min-h-screen min-w-screen gap-4 pt-16 px-6 pb-24 text-white bg-overtime">
       <BackButton />
@@ -38,10 +45,20 @@ const ReportPage = async ({ params }: { params: ReportPageParams }) => {
         </ReportItem>
 
         <ReportTitle>출근 시간</ReportTitle>
-        <ReportItem>{startTime.toLocaleTimeString()}</ReportItem>
+        <ReportItem>
+          <span>
+            {startTime.toLocaleTimeString()}
+            {startTime.getTime() < standardStartTime.getTime() && <Badge className="bg-rose-400 text-white ml-2">지각</Badge>}
+          </span>
+        </ReportItem>
 
         <ReportTitle>퇴근 시간</ReportTitle>
-        <ReportItem>{endTime.toLocaleTimeString()}</ReportItem>
+        <ReportItem>
+          <span>
+            {endTime.toLocaleTimeString()}
+            {endTime.getTime() > standardEndTime.getTime() && <Badge className="bg-rose-400 text-white ml-2">...</Badge>}
+          </span>
+        </ReportItem>
 
         <ReportTitle>근무 시간</ReportTitle>
         <ReportItem>{timeDiffrence}시간</ReportItem>

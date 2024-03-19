@@ -1,4 +1,4 @@
-import { getReportSummary } from "@/api/get-report";
+import { getReportPageResponse } from "@/api/get-report";
 
 import PullToRefresh from "@/components/actions/pull-to-refresh";
 import TopLabel from "@/components/ui/top-label";
@@ -7,13 +7,11 @@ import StrechableAlert from "@/components/ui/stretchable-alert";
 import ReportList from "@/app/(main)/(routes)/[userId]/reports/(components)/report-list";
 import { ClockIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { cn } from "@/lib/utils";
+import WorkHealthy from "@/app/(main)/(routes)/[userId]/reports/(components)/work-healthy";
 
 const ReportsPage = async ({ params }: { params: { userId: number } }) => {
-  const rate = 98;
-
   const { userId } = params;
-  const { totalWorkDay, wholesomeRate } = await getReportSummary(userId);
+  const { totalWorkDay, healthyRate } = await getReportPageResponse(userId);
 
   return (
     <PullToRefresh>
@@ -39,13 +37,10 @@ const ReportsPage = async ({ params }: { params: { userId: number } }) => {
             <span className="ml-auto text-2xl"> {totalWorkDay} 일</span>
           </StrechableAlert>
 
-          <Alert className="border-0 bg-content rounded-2xl h-16 mt-4">
-            <AlertDescription className="pr-2 flex items-center h-full">
-              <ClockIcon className="h-4 w-4" />
-              <span className="ml-2"> 근무 건전도 </span>
-              <span className={cn("ml-auto text-2xl font-bold", wholesomeRate > 95 ? "text-emerald-400" : "text-yellow-400")}> {rate} % </span>
-            </AlertDescription>
-          </Alert>
+          <WorkHealthy
+            healthyRate={healthyRate}
+            userId={userId}
+          />
 
           <Alert className="border-0 bg-content rounded-2xl h-16 mt-4">
             <AlertDescription className="pr-2 flex items-center h-full">
