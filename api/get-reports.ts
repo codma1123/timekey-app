@@ -1,6 +1,6 @@
-import { Report } from "@/types/report";
+import { ReportSummary } from "@/types/report";
 
-export const getReports = async (userId: number): Promise<Report[]> =>
+export const getReports = async (userId: number): Promise<ReportSummary[]> =>
   new Promise((resolve) =>
     resolve([
       {
