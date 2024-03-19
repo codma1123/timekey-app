@@ -4,16 +4,15 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, D
 
 import { useBottomOverStore } from "@/store/bottom-over";
 import { Hotel } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Location } from "@/types/location";
+import { useShallow } from "zustand/react/shallow";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useModalStore } from "@/store/use-modal-store";
 
 const LocationBottomOver = () => {
-  const { isOpen, bottomOverType, closeBottomOver, bottomOverData } = useBottomOverStore();
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const clsoe = useBottomOverStore((state) => state.closeBottomOver);
-
-  const isBottomOverOpen = isOpen && bottomOverType === "location";
+  const [isOpen, bottomOverType, bottomOverData, closeBottomOver] = useBottomOverStore(useShallow((state) => [state.isOpen, state.bottomOverType, state.bottomOverData, state.closeBottomOver]));
+  const onOpen = useModalStore((state) => state.onOpen);
 
   if (!bottomOverData) return null;
 
@@ -22,7 +21,7 @@ const LocationBottomOver = () => {
   return (
     <Drawer
       modal={false}
-      open={isBottomOverOpen}
+      open={isOpen && bottomOverType === "location"}
       onOpenChange={(e) => !e && closeBottomOver()}
     >
       <DrawerTrigger className="hidden"></DrawerTrigger>
@@ -36,14 +35,24 @@ const LocationBottomOver = () => {
         <DrawerHeader className="text-xl text-left">
           <div className="flex gap-x-2 items-center">
             <Hotel />
-            {location.title}
+            <p>{location.title}</p>
+            <span className="flex gap-x-2 ml-auto">
+              <Badge
+                variant="destructive"
+                className="bg-sky-300"
+              >
+                #주요 퇴근지
+              </Badge>
+              <Badge
+                variant="destructive"
+                className="bg-sky-300"
+              ></Badge>
+            </span>
           </div>
           <div className="text-zinc-600 text-sm">{location.address}</div>
         </DrawerHeader>
 
         <DrawerDescription className="px-4"></DrawerDescription>
-
-        <DrawerFooter className="text-center"></DrawerFooter>
       </DrawerContent>
     </Drawer>
   );
