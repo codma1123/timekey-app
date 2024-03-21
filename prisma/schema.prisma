@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  name        String
+  createdAt   DateTime @default(now())
+  endHour     Int      @default(17)
+  endMinute   Int      @default(40)
+  startHour   Int      @default(8)
+  startMinute Int      @default(50)
+  reports     Report[]
+}
+
+model Report {
+  id         String       @id @default(uuid()) @db.VarChar(36)
+  userId     String
+  date       String
+  isWorking  Boolean      @default(false)
+  status     ReportStatus @default(STANDBY)
+  endTime    DateTime?
+  startTime  DateTime     @default(now())
+  locationId String?
+  user       User         @relation(fields: [userId], references: [id])
+}
+
+model Location {
+  id        String @id @default(uuid()) @db.VarChar(36)
+  name      String
+  address   String
+  radius    Int
+  latitude  Float
+  longitude Float
+}
+
+enum ReportStatus {
+  WORKING
+  STANDBY
+  DONE
+  EARlLY
+  VACATION
+  HALF_VACATION
+}
