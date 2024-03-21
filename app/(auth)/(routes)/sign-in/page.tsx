@@ -13,6 +13,8 @@ import { useRouter, redirect } from "next/navigation";
 import { useAuthStore } from "@/store/auth";
 import { useGlobalLoading } from "@/store/global-loading";
 
+("405661d7-80bd-4eb4-8556-25369d4631e1");
+
 const schema = yup.object().shape({
   email: yup.string(),
   password: yup.string(),
@@ -42,7 +44,7 @@ const SignIn = () => {
             const id = uuidv4();
             setId(id);
 
-            router.push(`/${id}/home`);
+            router.push(`/405661d7-80bd-4eb4-8556-25369d4631e1/home`);
             return;
 
             setLoading(true);
