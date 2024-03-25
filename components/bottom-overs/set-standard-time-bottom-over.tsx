@@ -6,6 +6,7 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, D
 import { useState } from "react";
 
 import { StandardTime, setUserStandardTime } from "@/api/db/auth/set-user-standard-time";
+import axios from "axios";
 
 type RadioValue = "option-one" | "option-two" | "option-three";
 
@@ -48,7 +49,13 @@ const SetStandardTimeBottomOver = ({ userId }: { userId: string }) => {
 
   const onButtonClick = async () => {
     const { start, end } = RadioValueMap[radioValue];
-    await setUserStandardTime({ userId, start, end });
+
+    await axios.put("/api/user/set-user-standard-time", {
+      userId,
+      start,
+      end,
+    });
+
     setIsOpen(false);
   };
 
