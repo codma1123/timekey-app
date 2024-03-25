@@ -2,10 +2,11 @@
 
 import BackButton from "@/components/ui/back-button";
 import { useBottomOverStore } from "@/store/bottom-over";
-import { Location } from "@/types/location";
+
 import { Position } from "@/types/position";
 import { Geolocation } from "@capacitor/geolocation";
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
+import { Location } from "@prisma/client";
 import { Circle, GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { CheckCircle2, LocateFixed } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
@@ -46,10 +47,6 @@ const MapArea = (props: GoogleMapAreaProps) => {
     map.panTo(currentUserPosition);
   }, [map, center]);
 
-  const onLoad = (map: google.maps.Map) => {
-    setMap(map);
-  };
-
   const onUnmount = useCallback((map: google.maps.Map) => {
     setMap(null);
   }, []);
@@ -65,7 +62,10 @@ const MapArea = (props: GoogleMapAreaProps) => {
 
   const onLocationMarkerClick = useCallback(
     (location: Location) => {
-      map.panTo(location.position);
+      map.panTo({
+        lat: props.location.latitude,
+        lng: props.location.longitude,
+      });
       map.setZoom(13);
 
       setCircleData(location);
@@ -127,7 +127,7 @@ const MapArea = (props: GoogleMapAreaProps) => {
       }}
       center={center}
       zoom={14}
-      onLoad={onLoad}
+      onLoad={setMap}
       onUnmount={onUnmount}
       onClick={onMapClick}
     >
@@ -172,7 +172,10 @@ const MapArea = (props: GoogleMapAreaProps) => {
       {props.locations &&
         props.locations.map((location) => (
           <Marker
-            position={location.position}
+            position={{
+              lat: location.latitude,
+              lng: location.longitude,
+            }}
             onClick={() => onLocationMarkerClick(location)}
             icon={{
               url: "/assets/location-pin.svg",
@@ -189,7 +192,7 @@ const MapArea = (props: GoogleMapAreaProps) => {
         <Circle
           onClick={() => setCircleData(null)}
           key={circleData.id}
-          center={circleData.position}
+          center={{ lat: circleData.latitude, lng: circleData.longitude }}
           radius={circleData.radius}
           options={{
             strokeOpacity: 0,

@@ -1,5 +1,7 @@
 import { Position } from "@/types/position";
 
+export type LocationStatus = "active";
+
 export interface Location {
   position: Position;
   id: number;
@@ -8,3 +10,5 @@ export interface Location {
   address: string;
   description?: string;
 }
+
+export interface LocationSummary {}

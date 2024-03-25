@@ -41,9 +41,7 @@ const SignIn = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit((form) => {
-            const id = uuidv4();
-            setId(id);
-
+            setId("405661d7-80bd-4eb4-8556-25369d4631e1");
             router.push(`/405661d7-80bd-4eb4-8556-25369d4631e1/home`);
             return;
 

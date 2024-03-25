@@ -7,6 +7,7 @@ export const endWork = async ({ reportId }: { reportId: string }) => {
     },
     data: {
       isWorking: false,
+      status: "DONE",
     },
   });
 };

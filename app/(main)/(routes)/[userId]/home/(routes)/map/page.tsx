@@ -1,5 +1,5 @@
-import { getLocation } from "@/api/get-location";
-import { getLocations } from "@/api/get-locations";
+import { getLocation } from "@/api/db/locations/get-location";
+import { getLocations } from "@/api/db/locations/get-locations";
 import MapArea from "@/app/(main)/(routes)/[userId]/home/(routes)/map/(components)/map-area";
 
 interface MapParams {
@@ -8,21 +8,20 @@ interface MapParams {
   };
 
   searchParams: {
-    locationId?: number;
+    locationId?: string;
   };
 }
 
 const MapPage = async ({ params, searchParams }: MapParams) => {
-  const locations = await getLocations(params.userId);
+  const locations = await getLocations({ userId: params.userId });
 
   if (searchParams.locationId) {
-    const { position: center } = await getLocation(searchParams.locationId);
-    const location = await getLocation(searchParams.locationId);
+    const location = await getLocation({ locationId: searchParams.locationId });
 
     return (
       <MapArea
         location={location}
-        center={center}
+        center={{ lat: location.latitude, lng: location.longitude }}
         locations={locations}
       />
     );

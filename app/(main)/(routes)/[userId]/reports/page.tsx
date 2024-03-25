@@ -1,17 +1,17 @@
-import { getReportPageResponse } from "@/api/get-report";
-
 import PullToRefresh from "@/components/actions/pull-to-refresh";
 import TopLabel from "@/components/ui/top-label";
 import SlideDown from "@/components/motions/slide-down";
 import StrechableAlert from "@/components/ui/stretchable-alert";
 import ReportList from "@/app/(main)/(routes)/[userId]/reports/(components)/report-list";
 import { ClockIcon } from "@radix-ui/react-icons";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import WorkHealthy from "@/app/(main)/(routes)/[userId]/reports/(components)/work-healthy";
+import { getReports } from "@/api/db/reports/get-reports";
 
-const ReportsPage = async ({ params }: { params: { userId: number } }) => {
+const ReportsPage = async ({ params }: { params: { userId: string } }) => {
   const { userId } = params;
-  const { totalWorkDay, healthyRate } = await getReportPageResponse(userId);
+  const reports = await getReports({ userId });
+
+  const totalWorkDay = reports.length;
 
   return (
     <PullToRefresh>
@@ -24,10 +24,6 @@ const ReportsPage = async ({ params }: { params: { userId: number } }) => {
         />
 
         <SlideDown>
-          <div className="text-xl w-full text-white font-bold mt-2 ">근무 요약</div>
-        </SlideDown>
-
-        <SlideDown>
           <StrechableAlert
             alertClassName="bg-content"
             extend={<div className="text-center text-2xl mt-8 font-bold">222일 14시간 20일</div>}
@@ -38,21 +34,23 @@ const ReportsPage = async ({ params }: { params: { userId: number } }) => {
           </StrechableAlert>
 
           <WorkHealthy
-            healthyRate={healthyRate}
+            reports={reports}
             userId={userId}
           />
 
-          <Alert className="border-0 bg-content rounded-2xl h-16 mt-4">
+          {/* <Alert className="border-0 bg-content rounded-2xl h-16 mt-4">
             <AlertDescription className="pr-2 flex items-center h-full">
               <ClockIcon className="h-4 w-4" />
               <span className="mx-auto">이번주 3시간이나 야근했어요.</span>
             </AlertDescription>
-          </Alert>
+          </Alert> */}
         </SlideDown>
 
-        <div className="text-xl w-full text-white font-bold mt-2">근무 내역</div>
+        <div className="text-xl w-full text-white font-bold mt-4">근무 내역</div>
 
-        <ReportList userId={userId} />
+        <div className="w-full relative flex flex-col gap-y-4">
+          <ReportList reports={reports} />
+        </div>
       </div>
     </PullToRefresh>
   );

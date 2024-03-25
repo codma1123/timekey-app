@@ -2,23 +2,26 @@
 
 import { useWorkStore } from "@/store/work";
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
+import { Report, User } from "@prisma/client";
 import axios from "axios";
 import { PanInfo, motion, useAnimation } from "framer-motion";
 import { Key } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 
-interface OpenProps {
-  userId: string;
+interface StartWorkButtonProps {
+  user: User;
+  report: Report;
   isWorkingAsync: boolean;
-  reportId: string;
   locationId: string;
 }
 
-const Open = ({ isWorkingAsync, reportId, userId, locationId }: OpenProps) => {
+const StartWorkButton = ({ isWorkingAsync, report, user, locationId }: StartWorkButtonProps) => {
+  const { id: reportId } = report;
+  const { id: userId } = user;
+
   const controls = useAnimation();
   const [pos, setPos] = useState(0);
-
   const [workOn, isStoreWork] = useWorkStore(useShallow((state) => [state.workOn, state.isWork]));
 
   const onDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
@@ -85,4 +88,4 @@ const Open = ({ isWorkingAsync, reportId, userId, locationId }: OpenProps) => {
   );
 };
 
-export default Open;
+export default StartWorkButton;

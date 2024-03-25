@@ -1,11 +1,11 @@
 import { Vacation } from "@/types/vacation";
 import { AnyAction } from "@/store/types";
 import { create } from "zustand";
-import { Location } from "@/types/location";
+import { Location } from "@prisma/client";
 
-type BottomOverType = "vacationDetail" | "location";
+type BottomOverType = "vacationDetail" | "location" | "set-standard-time";
 
-type BottomOverActions = AnyAction<"vacationDetail", Vacation> | AnyAction<"location", Location>;
+type BottomOverActions = AnyAction<"vacationDetail", Vacation> | AnyAction<"location", Location> | AnyAction<"set-standard-time", { userId: string }>;
 
 type BottomOverData = BottomOverActions["payload"];
 

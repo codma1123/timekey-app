@@ -7,20 +7,25 @@ interface WorkStoreState {
 }
 
 interface WorkStoreActions {
-  earlyWorkOff: () => Promise<void>;
-  workOff: () => Promise<void>;
+  earlyWorkOff: () => void;
+  workOff: () => void;
+  workOn: () => void;
 }
 
 export const useWorkStore = create<WorkStoreState & WorkStoreActions>((set) => ({
-  isWork: true,
+  isWork: false,
   canWorkOff: true,
 
   workOff: () =>
     new Promise((resolve) => {
       delay(1000).then(resolve);
     }),
-  earlyWorkOff: () =>
-    new Promise((resolve) => {
-      delay(1000).then(resolve);
-    }),
+
+  earlyWorkOff: () => {
+    set({ isWork: false });
+  },
+
+  workOn() {
+    set({ isWork: true });
+  },
 }));

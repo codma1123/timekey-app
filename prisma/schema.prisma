@@ -12,10 +12,10 @@ model User {
   id          String   @id @default(uuid()) @db.VarChar(36)
   name        String
   createdAt   DateTime @default(now())
-  endHour     Int      @default(17)
-  endMinute   Int      @default(40)
-  startHour   Int      @default(8)
-  startMinute Int      @default(50)
+  endHour     Int?
+  endMinute   Int?
+  startHour   Int?
+  startMinute Int?
   reports     Report[]
 }
 
@@ -28,6 +28,7 @@ model Report {
   endTime    DateTime?
   startTime  DateTime     @default(now())
   locationId String?
+  isLate     Boolean      @default(false)
   user       User         @relation(fields: [userId], references: [id])
 }
 

@@ -1,3 +1,5 @@
+import { User } from "@/types/user";
+
 export interface SignUpForm {
   name?: string;
   phoneNumber?: string;
@@ -13,11 +15,9 @@ export interface SignInform {
 
 export type AuthState = {
   isAuthenticate: boolean;
-  user: any;
+  user: User;
   id: string | number;
 };
-
-export type User = {};
 
 export type AuthActions = {
   signUp: (form: SignUpForm) => Promise<void>;

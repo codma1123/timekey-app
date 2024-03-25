@@ -2,11 +2,14 @@
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
+import { Report } from "@prisma/client";
 import { ClockIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const WorkHealthy = ({ healthyRate, userId }: { healthyRate: number; userId: number }) => {
+const WorkHealthy = ({ reports, userId }: { reports: Report[]; userId: string }) => {
   const router = useRouter();
+
+  const rate = (reports.reduce((acc, cur) => (cur.isLate ? acc * 0.95 : acc), 1) * 100).toFixed();
 
   return (
     <Alert
@@ -16,7 +19,7 @@ const WorkHealthy = ({ healthyRate, userId }: { healthyRate: number; userId: num
       <AlertDescription className="pr-2 flex items-center h-full">
         <ClockIcon className="h-4 w-4" />
         <span className="ml-2"> 근무 건전도 </span>
-        <span className={cn("ml-auto text-2xl font-bold", healthyRate > 95 ? "text-emerald-400" : "text-yellow-400")}> {healthyRate} % </span>
+        <span className={cn("ml-auto text-2xl font-bold", 98 > 95 ? "text-emerald-400" : "text-yellow-400")}> {rate} % </span>
       </AlertDescription>
     </Alert>
   );

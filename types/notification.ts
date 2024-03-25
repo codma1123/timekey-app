@@ -4,3 +4,5 @@ export interface Notification {
   content: string;
   timestamp?: Date;
 }
+
+export interface NotificationSummary {}

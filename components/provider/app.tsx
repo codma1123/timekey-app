@@ -7,8 +7,6 @@ const AppProvider = () => {
   useEffect(() => {
     App.addListener("appStateChange", (data) => {
       if (data.isActive) {
-        // refresh requests .....
-        console.log("refresh !");
       }
     });
 

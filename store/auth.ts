@@ -1,12 +1,15 @@
 import { delay } from "@/lib/delay";
-import { AuthActions, AuthState, SignInform, SignUpForm, User } from "@/store/auth/type";
+import { AuthActions, AuthState, SignInform, SignUpForm } from "@/store/auth/type";
+import { User } from "@/types/user";
 import axios, { AxiosResponse } from "axios";
 import { omit } from "lodash";
 import { create } from "zustand";
 
-const initial = {
+const initial: AuthState = {
   isAuthenticate: false,
-  user: null,
+  user: {
+    healthyRate: 98,
+  },
   id: null,
 };
 

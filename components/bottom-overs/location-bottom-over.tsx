@@ -4,11 +4,10 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, D
 
 import { useBottomOverStore } from "@/store/bottom-over";
 import { Hotel } from "lucide-react";
-import { Location } from "@/types/location";
 import { useShallow } from "zustand/react/shallow";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { useModalStore } from "@/store/use-modal-store";
+import { Location } from "@prisma/client";
 
 const LocationBottomOver = () => {
   const [isOpen, bottomOverType, bottomOverData, closeBottomOver] = useBottomOverStore(useShallow((state) => [state.isOpen, state.bottomOverType, state.bottomOverData, state.closeBottomOver]));
@@ -35,7 +34,7 @@ const LocationBottomOver = () => {
         <DrawerHeader className="text-xl text-left">
           <div className="flex gap-x-2 items-center">
             <Hotel />
-            <p>{location.title}</p>
+            <p>{location.name}</p>
             <span className="flex gap-x-2 ml-auto">
               <Badge
                 variant="destructive"

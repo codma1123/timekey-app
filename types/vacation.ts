@@ -1,14 +1,8 @@
+import { StatusMap } from "@/types/status-map";
+
 export type VacationStatus = "waiting" | "done";
 
-export type Vacation = {
-  id: any;
-  date: Date;
-  allowed: boolean;
-  status: VacationStatus;
-  reason: string;
-};
-
-export const VacationStatusMap: Record<VacationStatus, { text: string; color: string }> = {
+export const VacationStatusMap: Record<VacationStatus, StatusMap> = {
   done: {
     text: "사용 완료",
     color: "text-emerald-400",
@@ -19,4 +13,14 @@ export const VacationStatusMap: Record<VacationStatus, { text: string; color: st
   },
 };
 
-export type VacationResponse = {};
+export interface Vacation {
+  id: any;
+  date: Date;
+  allowed: boolean;
+  status: VacationStatus;
+  reason: string;
+}
+
+export interface VacationSummary {}
+
+export interface VacationResponse {}

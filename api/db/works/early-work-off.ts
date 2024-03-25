@@ -1,12 +1,13 @@
 import { db } from "@/lib/prisma";
 
-export const earlyWorkOff = async ({ reportId }: { reportId: string }) => {
+export const ealryWorkOff = async ({ reportId }: { reportId: string }) => {
   await db.report.update({
     where: {
       id: reportId,
     },
     data: {
       isWorking: false,
+      status: "EARlLY",
     },
   });
 };
