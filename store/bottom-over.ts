@@ -3,9 +3,9 @@ import { AnyAction } from "@/store/types";
 import { create } from "zustand";
 import { Location } from "@prisma/client";
 
-type BottomOverType = "vacationDetail" | "location" | "set-standard-time";
+type BottomOverType = "vacationDetail" | "location" | "set-user-standard-time";
 
-type BottomOverActions = AnyAction<"vacationDetail", Vacation> | AnyAction<"location", Location> | AnyAction<"set-standard-time", { userId: string }>;
+type BottomOverActions = AnyAction<"vacationDetail", Vacation> | AnyAction<"location", Location> | AnyAction<"set-user-standard-time", { userId: string }>;
 
 type BottomOverData = BottomOverActions["payload"];
 

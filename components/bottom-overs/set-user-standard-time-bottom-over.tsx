@@ -5,7 +5,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTrigger } from "@/components/ui/drawer";
 import { useState } from "react";
 
-import { StandardTime, setUserStandardTime } from "@/api/db/auth/set-user-standard-time";
+import { StandardTime } from "@/api/db/auth/set-user-standard-time";
 import axios from "axios";
 
 type RadioValue = "option-one" | "option-two" | "option-three";
@@ -43,7 +43,7 @@ const RadioValueMap: Record<RadioValue, { start: StandardTime; end: StandardTime
   },
 };
 
-const SetStandardTimeBottomOver = ({ userId }: { userId: string }) => {
+const SetUserStandardTimeBottomOver = ({ userId }: { userId: string }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [radioValue, setRadioValue] = useState<RadioValue>("option-one");
 
@@ -128,4 +128,4 @@ const SetStandardTimeBottomOver = ({ userId }: { userId: string }) => {
   );
 };
 
-export default SetStandardTimeBottomOver;
+export default SetUserStandardTimeBottomOver;

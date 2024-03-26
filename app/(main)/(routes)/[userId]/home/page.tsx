@@ -3,7 +3,7 @@ import EndWorkButton from "@/app/(main)/(routes)/[userId]/home/(components)/end-
 import { toDateFormat } from "@/lib/utils";
 import { createReport } from "@/api/db/reports/create-report";
 import { findReport } from "@/api/db/reports/find-report";
-import SetStandardTime from "@/app/(main)/(routes)/[userId]/home/(components)/set-standard-time";
+import SetStandardTime from "@/app/(main)/(routes)/[userId]/home/(components)/set-user-standard-time";
 import { getUser } from "@/api/db/auth/get-user";
 import StartWorkButton from "@/app/(main)/(routes)/[userId]/home/(components)/start-work-button";
 
