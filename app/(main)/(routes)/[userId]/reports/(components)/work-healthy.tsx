@@ -6,7 +6,12 @@ import { Report } from "@prisma/client";
 import { ClockIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const WorkHealthy = ({ reports, userId }: { reports: Report[]; userId: string }) => {
+interface WorkHealthyProps {
+  reports: Report[];
+  userId: string;
+}
+
+const WorkHealthy = ({ reports, userId }: WorkHealthyProps) => {
   const router = useRouter();
 
   const rate = (reports.reduce((acc, cur) => (cur.isLate ? acc * 0.95 : acc), 1) * 100).toFixed();
