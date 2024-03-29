@@ -1,4 +1,4 @@
-import HomeSettings from "@/app/(main)/(routes)/[userId]/home/(components)/home-settings";
+import HomeSettings from "@/app/(main)/(routes)/[userId]/home/(components)/top-navs";
 import EndWorkButton from "@/app/(main)/(routes)/[userId]/home/(components)/end-work-button";
 import { toDateFormat } from "@/lib/utils";
 import { createReport } from "@/api/db/reports/create-report";
@@ -6,11 +6,17 @@ import { findReport } from "@/api/db/reports/find-report";
 import SetStandardTime from "@/app/(main)/(routes)/[userId]/home/(components)/set-user-standard-time";
 import { getUser } from "@/api/db/auth/get-user";
 import StartWorkButton from "@/app/(main)/(routes)/[userId]/home/(components)/start-work-button";
-import CheckValidLocation from "@/app/(main)/(routes)/[userId]/home/(components)/check-valid-location";
+import { User } from "@prisma/client";
 
 const LOCATION_ID = "2217576d-1a1f-4f66-b7ed-7dbf83af01f2";
 
-const HomePage = async ({ params }: { params: { userId: UUID } }) => {
+interface HomePageProps {
+  params: {
+    userId: UUID;
+  };
+}
+
+const HomePage = async ({ params }: HomePageProps) => {
   const { userId } = params;
 
   const date = toDateFormat(new Date());
@@ -21,11 +27,7 @@ const HomePage = async ({ params }: { params: { userId: UUID } }) => {
   const isWorkingAsync = report !== null && report.isWorking;
 
   return (
-    <main className="flex flex-col items-center h-screen min-w-screen gap-4 pt-16 px-6">
-      <CheckValidLocation />
-
-      <HomeSettings />
-
+    <div className="flex flex-col items-center h-screen min-w-screen gap-4 px-6 pt-16">
       <EndWorkButton
         report={report}
         user={user}
@@ -44,7 +46,7 @@ const HomePage = async ({ params }: { params: { userId: UUID } }) => {
       <SetStandardTime user={user} />
 
       {/* <NotificationList userId={userId} /> */}
-    </main>
+    </div>
   );
 };
 
