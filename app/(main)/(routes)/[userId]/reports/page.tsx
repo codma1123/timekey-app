@@ -2,10 +2,10 @@ import PullToRefresh from "@/components/actions/pull-to-refresh";
 import TopLabel from "@/components/ui/top-label";
 import SlideDown from "@/components/motions/slide-down";
 import StrechableAlert from "@/components/ui/stretchable-alert";
-import ReportList from "@/app/(main)/(routes)/[userId]/reports/(components)/report-list";
 import { ClockIcon } from "@radix-ui/react-icons";
 import WorkHealthy from "@/app/(main)/(routes)/[userId]/reports/(components)/work-healthy";
 import { getReports } from "@/api/db/reports/get-reports";
+import ReportsContent from "@/app/(main)/(routes)/[userId]/reports/(components)/reports-content";
 
 const ReportsPage = async ({ params }: { params: { userId: string } }) => {
   const { userId } = params;
@@ -49,7 +49,7 @@ const ReportsPage = async ({ params }: { params: { userId: string } }) => {
         <div className="text-xl w-full text-white font-bold mt-4">근무 내역</div>
 
         <div className="w-full relative flex flex-col gap-y-4">
-          <ReportList reports={reports} />
+          <ReportsContent reports={reports} />
         </div>
       </div>
     </PullToRefresh>
