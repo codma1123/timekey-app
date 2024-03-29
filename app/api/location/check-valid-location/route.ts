@@ -6,7 +6,7 @@ export const GET = async (request: Request) => {
   const latitude = Number(params.get("latitude"));
   const longitude = Number(params.get("longitude"));
 
-  const valid = await checkValidLocation({ userPosition: { latitude, longitude } });
+  const valid = await checkValidLocation({ point: { latitude, longitude } });
 
   return NextResponse.json(valid);
 };
