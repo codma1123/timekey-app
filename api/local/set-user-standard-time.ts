@@ -8,6 +8,5 @@ interface SetUserStandardTimeParams {
 }
 
 export const setUserStandardTime = (params: SetUserStandardTimeParams) => {
-  const response = axios.put("/api/user/set-user-standard-time", params);
-  return response;
+  axios.put("/api/user/set-user-standard-time", params);
 };
