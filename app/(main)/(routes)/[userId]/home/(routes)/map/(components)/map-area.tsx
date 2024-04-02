@@ -1,7 +1,6 @@
 "use client";
 
 import BackButton from "@/components/ui/back-button";
-import ValidLocationAlert from "@/components/valid-location-alert";
 import { useBottomOverStore } from "@/store/bottom-over";
 
 import { Position } from "@/types/position";
@@ -122,8 +121,6 @@ const MapArea = (props: GoogleMapAreaProps) => {
       onUnmount={() => setMap(null)}
       onClick={onMapClick}
     >
-      {map && <ValidLocationAlert />}
-
       <BackButton />
 
       <button className="absolute bottom-[15%] right-6 p-1 bg-primary-dark rounded-xl z-50">

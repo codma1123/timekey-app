@@ -2,6 +2,7 @@
 
 import { checkValidLocationRequest } from "@/api/local/check-valid-location-request";
 import { cn } from "@/lib/utils";
+import { useLocationStore } from "@/store/use-location-store";
 import { Geolocation } from "@capacitor/geolocation";
 import { Location } from "@prisma/client";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
@@ -10,19 +11,26 @@ import { useEffect, useState } from "react";
 
 const ValidLocationAlert = ({ className }: { className?: string }) => {
   const [validLocations, setValidLocations] = useState<Location[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const setLocations = useLocationStore((state) => state.setLocations);
+
+  const checkValidLocation = async () => {
+    try {
+      const { coords } = await Geolocation.getCurrentPosition();
+      const validLocationsResponse = await checkValidLocationRequest({
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+      });
+      setValidLocations(validLocationsResponse);
+      setLocations(validLocationsResponse);
+    } catch (e) {
+    } finally {
+      setLoaded(true);
+    }
+  };
 
   useEffect(() => {
-    const checkValidLocation = async () => {
-      try {
-        const { coords } = await Geolocation.getCurrentPosition();
-        const validLocationsResponse = await checkValidLocationRequest(coords);
-        setValidLocations(validLocationsResponse);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    checkValidLocation();
+    !loaded && checkValidLocation();
   }, []);
 
   return (
