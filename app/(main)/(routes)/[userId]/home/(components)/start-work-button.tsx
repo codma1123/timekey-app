@@ -1,10 +1,10 @@
 "use client";
 
+import { workStart } from "@/api/local/work-start";
 import { useLocationStore } from "@/store/use-location-store";
 import { useWorkStore } from "@/store/work";
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
 import { Report, User } from "@prisma/client";
-import axios from "axios";
 import { PanInfo, motion, useAnimation } from "framer-motion";
 import { Key } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -40,7 +40,7 @@ const StartWorkButton = ({ isWorkingAsync, report, user }: StartWorkButtonProps)
     }
 
     await Haptics.impact({ style: ImpactStyle.Light });
-    await axios.put("/api/work/start", {
+    await workStart({
       userId,
       reportId,
       locationId: locations[0].id,
