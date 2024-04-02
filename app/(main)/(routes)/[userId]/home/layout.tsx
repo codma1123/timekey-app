@@ -1,6 +1,6 @@
 import TopNavs from "@/app/(main)/(routes)/[userId]/home/(components)/top-navs";
 import { ReactNode } from "react";
-import { User } from "@prisma/client";
+import ValidLocationAlert from "@/components/valid-location-alert";
 
 interface HomeLayoutParams {
   children: ReactNode;
@@ -14,6 +14,8 @@ const HomeLayout = async ({ children, params }: HomeLayoutParams) => {
 
   return (
     <main className="min-h-screen min-w-screen">
+      <ValidLocationAlert />
+
       <TopNavs userId={userId} />
 
       {children}
