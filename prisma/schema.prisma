@@ -26,7 +26,7 @@ model Report {
   isWorking  Boolean      @default(false)
   status     ReportStatus @default(STANDBY)
   endTime    DateTime?
-  startTime  DateTime     @default(now())
+  startTime  DateTime?    @default(now())
   locationId String?
   isLate     Boolean      @default(false)
   user       User         @relation(fields: [userId], references: [id])
@@ -41,6 +41,12 @@ model Location {
   longitude Float
 }
 
+model Log {
+  id        String   @id @default(uuid())
+  text      String
+  timestamp DateTime @default(now())
+}
+
 enum ReportStatus {
   WORKING
   STANDBY
@@ -48,4 +54,6 @@ enum ReportStatus {
   EARlLY
   VACATION
   HALF_VACATION
+  ABSENT
+  CONFIRM_REQUIRED
 }

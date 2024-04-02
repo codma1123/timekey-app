@@ -41,6 +41,8 @@ const ReportCalendar = ({ reports }: { reports: Report[] }) => {
     EARlLY: (date: Date) => getReportsMapModifier(date, "EARlLY"),
     VACATION: (date: Date) => getReportsMapModifier(date, "VACATION"),
     HALF_VACATION: (date: Date) => getReportsMapModifier(date, "HALF_VACATION"),
+    ABSENT: (date: Date) => getReportsMapModifier(date, "ABSENT"),
+    CONFIRM_REQUIRED: (date: Date) => getReportsMapModifier(date, "CONFIRM_REQUIRED"),
   };
 
   const modifiersClassNames = Object.entries(ReportStatusMap).reduce((acc, [key, value]) => ({ ...acc, [key]: value.color.replace("text", "bg") }), {});

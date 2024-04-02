@@ -25,6 +25,8 @@ const ReportContent = ({ reports }: { reports: Report[] }) => {
   const [isStandby, setIsStandby] = useState<Checked>(true);
   const [isVacation, setisVacation] = useState<Checked>(true);
   const [isWorking, setIsWorking] = useState<Checked>(true);
+  const [isAbsent, setIsAbsent] = useState<Checked>(true);
+  const [isConfirm, setIsConfirm] = useState<Checked>(true);
 
   const reportDropdownMenusItems: (StatusMap & { checked: Checked; onCheckedChange: (checked: boolean) => void })[] = [
     {
@@ -81,9 +83,25 @@ const ReportContent = ({ reports }: { reports: Report[] }) => {
         setFilters(check, "HALF_VACATION");
       },
     },
+    {
+      ...ReportStatusMap["ABSENT"],
+      checked: isAbsent,
+      onCheckedChange: (check) => {
+        setIsAbsent(check);
+        setFilters(check, "ABSENT");
+      },
+    },
+    {
+      ...ReportStatusMap["CONFIRM_REQUIRED"],
+      checked: isConfirm,
+      onCheckedChange: (check) => {
+        setIsConfirm(check);
+        setFilters(check, "CONFIRM_REQUIRED");
+      },
+    },
   ];
 
-  const [filter, setFilter] = useState<ReportStatus[]>(["DONE", "EARlLY", "HALF_VACATION", "VACATION", "WORKING", "STANDBY"]);
+  const [filter, setFilter] = useState<ReportStatus[]>(["DONE", "EARlLY", "HALF_VACATION", "VACATION", "WORKING", "STANDBY", "ABSENT", "CONFIRM_REQUIRED"]);
 
   const setFilters = (check: boolean, status: ReportStatus) => {
     if (check) {

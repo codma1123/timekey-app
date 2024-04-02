@@ -26,4 +26,12 @@ export const ReportStatusMap: Record<ReportStatus, StatusMap> = {
     color: "text-sky-400",
     text: "근무중",
   },
+  ABSENT: {
+    color: "text-rose-400",
+    text: "무단 결근",
+  },
+  CONFIRM_REQUIRED: {
+    color: "text-yellow-400",
+    text: "확인 필요",
+  },
 } as const;
