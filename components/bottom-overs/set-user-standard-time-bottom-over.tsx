@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import { StandardTime } from "@/api/db/auth/set-user-standard-time";
 import axios from "axios";
+import { setUserStandardTime } from "@/api/local/set-user-standard-time";
 
 type RadioValue = "option-one" | "option-two" | "option-three";
 
@@ -50,7 +51,7 @@ const SetUserStandardTimeBottomOver = ({ userId }: { userId: string }) => {
   const onButtonClick = async () => {
     const { start, end } = RadioValueMap[radioValue];
 
-    await axios.put("/api/user/set-user-standard-time", {
+    await setUserStandardTime({
       userId,
       start,
       end,
