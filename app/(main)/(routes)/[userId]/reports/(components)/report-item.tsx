@@ -15,18 +15,18 @@ interface ReportItemProps {
 
 const ReportItem = ({ report }: ReportItemProps) => {
   const router = useRouter();
-  const { date, id, status } = report;
+  const { date, id: reportId, status, userId } = report;
   const { text, color } = ReportStatusMap[status];
 
   return (
     <Alert
-      className="text-white bg-content ring-0 border-0 rounded-2xl active:ring-1 active:ring-emerald-400 transition-[box-shadow] duration-200"
-      onClick={() => router.push(`/${report.userId}/reports/${id}`)}
+      className="text-white bg-content ring-0 border-0 rounded-2xl active:ring-1 active:ring-emerald-400 transition-[box-shadow] duration-200 py-4"
+      onClick={() => router.push(`/${userId}/reports/${reportId}`)}
     >
       <AlertDescription className="flex items-center">
         <CalendarIcon className="h-5 w-5" />
         <span className="ml-4">{date}</span>
-        <span className={cn("ml-auto text-lg font-bold", color)}>{text}</span>
+        <span className={cn("ml-auto font-bold", color)}>{text}</span>
       </AlertDescription>
     </Alert>
   );

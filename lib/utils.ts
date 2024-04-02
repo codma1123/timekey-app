@@ -13,6 +13,15 @@ export const getTimeDifference = (targetDate: Date): string => {
   return `${Math.floor(hoursDifference)}:${Math.floor(minutesDifference).toString().padStart(2, "0")}:${Math.floor(secondsDifference).toString().padStart(2, "0")}`;
 };
 
+export const getWorkTime = (startDate: Date, endDate: Date) => {
+  const diff = Math.abs(endDate.getTime() - startDate.getTime());
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+  return { hours, minutes };
+};
+
 export const toDateFormat = (date: Date) => {
   const formatter = new Intl.DateTimeFormat("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" });
   formatter.format;

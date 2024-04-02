@@ -2,7 +2,8 @@ import { checkValidLocation } from "@/api/db/locations/check-valid-location";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
-  const params = new URLSearchParams(request.url);
+  const params = new URLSearchParams(request.url.split("?")[1]);
+
   const latitude = Number(params.get("latitude"));
   const longitude = Number(params.get("longitude"));
 

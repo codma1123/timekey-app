@@ -1,22 +1,12 @@
-import HomeSettings from "@/app/(main)/(routes)/[userId]/home/(components)/top-navs";
 import EndWorkButton from "@/app/(main)/(routes)/[userId]/home/(components)/end-work-button";
 import { toDateFormat } from "@/lib/utils";
 import { createReport } from "@/api/db/reports/create-report";
 import { findReport } from "@/api/db/reports/find-report";
-import SetStandardTime from "@/app/(main)/(routes)/[userId]/home/(components)/set-user-standard-time";
 import { getUser } from "@/api/db/auth/get-user";
 import StartWorkButton from "@/app/(main)/(routes)/[userId]/home/(components)/start-work-button";
-import { User } from "@prisma/client";
+import SetUserStandardTimeBottomOver from "@/components/bottom-overs/set-user-standard-time-bottom-over";
 
-const LOCATION_ID = "2217576d-1a1f-4f66-b7ed-7dbf83af01f2";
-
-interface HomePageProps {
-  params: {
-    userId: UUID;
-  };
-}
-
-const HomePage = async ({ params }: HomePageProps) => {
+const HomePage = async ({ params }: { params: { userId: UUID } }) => {
   const { userId } = params;
 
   const date = toDateFormat(new Date());
@@ -39,13 +29,10 @@ const HomePage = async ({ params }: HomePageProps) => {
           report={report}
           user={user}
           isWorkingAsync={isWorkingAsync}
-          locationId={LOCATION_ID}
         />
       )}
 
-      <SetStandardTime user={user} />
-
-      {/* <NotificationList userId={userId} /> */}
+      {(user.startHour === null || user.startMinute === null || user.endHour === null || user.endMinute === null) && <SetUserStandardTimeBottomOver userId={user.id} />}
     </div>
   );
 };

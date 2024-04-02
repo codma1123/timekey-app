@@ -156,10 +156,6 @@ const GoogleMapArea = ({ locationId, locations, center }: GoogleMapAreaProps) =>
 
   return (
     <div>
-      <div className="absolute top-[7.5%] left-6 bg-primary-dark rounded-xl text-sm z-50 p-2 text-white">현재 퇴근 지역에 위치하고 있지 않습니다.</div>
-
-      <BackButton />
-
       <capacitor-google-map
         ref={mapRef}
         className="w-96 h-96"

@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocationStore } from "@/store/use-location-store";
 import { useWorkStore } from "@/store/work";
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
 import { Report, User } from "@prisma/client";
@@ -13,16 +14,16 @@ interface StartWorkButtonProps {
   user: User;
   report: Report;
   isWorkingAsync: boolean;
-  locationId: string;
 }
 
-const StartWorkButton = ({ isWorkingAsync, report, user, locationId }: StartWorkButtonProps) => {
+const StartWorkButton = ({ isWorkingAsync, report, user }: StartWorkButtonProps) => {
   const { id: reportId } = report;
   const { id: userId } = user;
 
   const controls = useAnimation();
   const [pos, setPos] = useState(0);
   const [workOn, isStoreWork] = useWorkStore(useShallow((state) => [state.workOn, state.isWork]));
+  const locations = useLocationStore((state) => state.locations);
 
   const onDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const dragDistance = Math.sqrt(info.offset.x ** 2 + info.offset.y ** 2);
@@ -34,11 +35,15 @@ const StartWorkButton = ({ isWorkingAsync, report, user, locationId }: StartWork
   }, []);
 
   const onDragEnd = async () => {
+    if (locations.length === 0) {
+      return;
+    }
+
     await Haptics.impact({ style: ImpactStyle.Light });
     await axios.put("/api/work/start", {
       userId,
       reportId,
-      locationId,
+      locationId: locations[0].id,
     });
 
     setPos(0);
