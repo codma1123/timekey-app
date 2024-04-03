@@ -51,14 +51,14 @@ cron.schedule("0 10 * * *", async () => {
 });
 
 // 미퇴근 처리
-cron.schedule("0 0 * * *", async () => {
+cron.schedule("48 8 * * *", async () => {
   try {
     const yesterday = getYesterday();
     const isHoliyDay = getIsHoliyDay(yesterday);
 
     if (isHoliyDay) return;
 
-    await db.report.updateMany({
+    const { count } = await db.report.updateMany({
       where: {
         date: toDateFormat(yesterday),
         startTime: {
@@ -68,8 +68,10 @@ cron.schedule("0 0 * * *", async () => {
       },
       data: {
         status: "CONFIRM_REQUIRED",
-        endTime: new Date(),
+        endTime: null,
       },
     });
+
+    console.log(`${count}건을 미퇴근 처리 했습니다.`);
   } catch (error) {}
 });
