@@ -35,10 +35,6 @@ const StartWorkButton = ({ isWorkingAsync, report, user }: StartWorkButtonProps)
   }, []);
 
   const onDragEnd = async () => {
-    if (locations.length === 0) {
-      return;
-    }
-
     await Haptics.impact({ style: ImpactStyle.Light });
     await workStart({
       userId,
