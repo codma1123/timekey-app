@@ -41,7 +41,6 @@ const DuplicateModal = () => {
               size="lg"
               onClick={async () => {
                 onClose();
-                await delay(200);
                 router.back();
               }}
             >

@@ -4,7 +4,7 @@ import { Comment } from "react-loader-spinner";
 import { useGlobalLoading } from "@/store/global-loading";
 
 const LoadingModal = () => {
-  const { loading } = useGlobalLoading();
+  const loading = useGlobalLoading(state => state.loading);
 
   return (
     <>

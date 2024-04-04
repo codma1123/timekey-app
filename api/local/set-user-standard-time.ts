@@ -7,6 +7,6 @@ interface SetUserStandardTimeParams {
   end: StandardTime;
 }
 
-export const setUserStandardTime = (params: SetUserStandardTimeParams) => {
-  axios.put("/api/user/set-user-standard-time", params);
+export const setUserStandardTime = async (params: SetUserStandardTimeParams) => {
+  return await axios.put("/api/user/set-user-standard-time", params);
 };

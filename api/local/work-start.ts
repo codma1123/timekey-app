@@ -7,5 +7,5 @@ interface WorkStartParams {
 }
 
 export const workStart = async (params: WorkStartParams) => {
-  await axios.put("/api/work/start", params);
+  return await axios.put("/api/work/start", params);
 };
