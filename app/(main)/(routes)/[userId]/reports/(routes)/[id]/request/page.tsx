@@ -1,19 +1,24 @@
 "use client";
 
+import { reportPutRequest } from "@/api/local/report-put-request";
 import SlideDown from "@/components/motions/slide-down";
 import Input from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useGlobalLoading } from "@/store/global-loading";
 import { File, FileDown, X } from "lucide-react";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, Suspense, useEffect, useRef, useState } from "react";
 
 const ReportRequestPage = ({ params }: { params: { userId: UUID; id: UUID } }) => {
   const { userId, id: reportId } = params;
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-
   const [textareaValue, setTextareaValue] = useState<string>("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const router = useRouter();
+  const setLoading = useGlobalLoading((state) => state.setLoading);
 
   const onFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0];
@@ -72,7 +77,21 @@ const ReportRequestPage = ({ params }: { params: { userId: UUID; id: UUID } }) =
 
       <button
         className="py-4 w-full mt-auto mb-6 text-xl bg-emerald-400 text-white rounded-2xl"
-        onClick={() => {}}
+        onClick={async () => {
+          setLoading(true);
+          try {
+            await reportPutRequest({
+              reportId,
+              userId,
+              requestType: "ENDTIME_CONFIRM",
+              description: textareaValue,
+            });
+
+            router.replace(`/${userId}/reports/done`);
+          } finally {
+            setLoading(false);
+          }
+        }}
       >
         퇴근 처리 요청
       </button>
