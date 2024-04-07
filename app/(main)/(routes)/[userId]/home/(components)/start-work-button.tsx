@@ -39,7 +39,7 @@ const StartWorkButton = ({ isWorkingAsync, report, user }: StartWorkButtonProps)
     await workStart({
       userId,
       reportId,
-      locationId: locations[0].id,
+      locationId: /** locations[0].id, */ "2217576d-1a1f-4f66-b7ed-7dbf83af01f2",
     });
 
     setPos(0);
